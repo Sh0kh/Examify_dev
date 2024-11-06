@@ -1,0 +1,340 @@
+@media(max-width:1100px) {
+
+    .Hero h1 {
+        font-size: 50px;
+        line-height: 60px;
+        width: 100%;
+    }
+    .Hero img {
+        width: 500px !important;
+    }
+    .Test__wrapper{
+        grid-template-columns: repeat(3,1fr) !important;
+    }
+}
+@media(max-width:1050px){
+    .Top3__wrapper{
+        gap: 10px;
+        width: 100%;
+    }
+    .Top3__card{
+        padding: 10px;
+        width: 100%;
+    }
+    .Top3__card1{
+        padding: 25px;
+        width: 100%;
+    }
+    .LoginModal{
+        width: 50%;
+    }
+    .TestModal{
+        width: 30%;
+    }
+    .MyResult__wrapper{
+        width: 100%;
+    }
+}
+@media(max-width:1000px){
+    .Service__wrapper{
+        grid-template-columns: repeat(2,1fr) !important;
+
+    }
+    .Service__Card2{
+        display: block;
+    }
+    .Service__wrapper2{
+        display: none !important;
+    }
+    .Result__wrapper{
+        width: 100% !important;
+    }
+    .MyResult__card{
+        display: flex;
+        align-items: start !important;
+        gap: 5px;
+    }
+    .myResult__grid{
+        flex-wrap: wrap;
+    }
+}
+@media(max-width:950px){
+    .Contact h1{
+        width: auto;
+    }
+    .speaking__wrapper{
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+@media(max-width:900px) {
+    .Hero img {
+        display: none;
+    }
+    .Hero__wrapper{
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    .Hero a{
+        margin: 0 auto;
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+}
+@media(max-width:850px){
+    .Test__wrapper{
+        gap: 10px !important;
+    }
+    .Test__card{
+        height: 450px;
+    }
+}
+@media(max-width:760px){
+    .Test__wrapper{
+        grid-template-columns: repeat(2,1fr) !important;
+    }
+    .Test__card img:nth-child(2){
+        display: none;
+    }
+    .Top3__wrapper{
+        display: none;
+    }
+    .Top3__wrapper__mb{
+        display: flex !important;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .LoginModal{
+        width: 70%;
+    }
+    .writing__wrapper{
+        text-align: center;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+    }
+}
+@media(max-width:700px) {
+    header .header__wrapper nav {
+        display: none !important;
+    }
+
+    .header__login__btn {
+        display: none;
+    }
+
+    .header__burger {
+        display: block;
+    }
+    .Contact{
+
+        padding: 0px 15px;
+        padding-top: 70px;
+    }
+    .Contact form{
+        width: 100%;
+    }
+    .Contact h1{
+        font-size: 22px !important;
+    }
+    .TestModal{
+        width: 40%;
+    }
+    .myResult__grid{
+        gap: 5px;
+    }
+    .recom{
+        display: block;
+    }
+
+    .Readin__wrapper{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .Readin__wrapper div{
+        width: 100%;
+    }
+    .ReadingLine{
+        display: block !important;
+    }
+    .Task1{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .Task1 div{
+        width: 100%;
+    }
+    .Task1 textarea{
+        height: 500px;
+    }
+}
+@media(max-width:600px){
+    .Service__wrapper{
+        grid-template-columns: repeat(1,1fr) !important;
+    }
+    .LoginModal{
+        width: 80%;
+    }
+}
+@media(max-width:600px){
+    .HFAQ__wrapper{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .myResult__grid{
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    .MyResult__card{
+        text-align: center;
+    }
+    .warningModal{
+        width: 95%;
+        margin: 0 auto;
+    }
+}
+@media(max-width:500px){
+    .Service h1{
+        font-size: 40px;
+    }
+    .Result h1{
+        font-size: 40px;
+    }
+    .HFAQ h1{
+        font-size: 40px;
+    }
+    .Contact form{
+        padding: 15px;
+    }
+    .LoginModal{
+        width: 90%;
+    }
+    .TestModal{
+        width: 50%;
+    }
+    .MyResult__card{
+        flex-direction: column;
+        gap: 10px;
+        align-items: center !important;
+        justify-content: center;
+    }
+    .MyResult__wrapper{
+        text-align: center;
+    }
+    .audio{
+        width: 100%;
+    }
+}
+@media(max-width:480px){
+    .Table h3{
+        font-size: 15px;
+    }
+
+}
+@media(max-width:470px){
+    .Test__wrapper{
+        grid-template-columns: repeat(1,1fr) !important;
+    }
+    .TestCard2{
+        display: none;
+    }
+    .Test__card{
+        height: auto
+    }
+}
+@media(max-width:450px){
+    .Login form {
+        gap: 10px;
+    }
+    .Login form input{
+        padding: 5px !important;
+    }
+    .RatingTable span{
+        font-size: 12px !important;
+    }
+    .MuiPaper-root{
+        padding: 0px !important;
+    }
+    .LoginModal input{
+        width: 100% !important;
+    }
+}
+@media(max-width:426px) {
+    header .header__wrapper img {
+        width: 120px !important;
+    }
+    footer img{
+        width: 120px !important;
+    }
+    footer{
+        padding: 10px 0px !important;
+    }
+}
+@media(max-width:400px){
+    .Service h1{
+        font-size: 30px;
+    }
+    .Result p{
+        font-size: 15px !important;
+    }
+    .Result h1{
+        font-size: 30px;
+    }
+    .Service__Card svg, .Service__Card2 svg{
+        font-size: 40px !important;
+    }
+    .Service__Card h3, .Service__Card2 h3{
+        font-size: 20px;
+    }
+    .Service__Card p, .Service__Card2 p{
+        font-size: 15px;
+    }
+    .Result__Card{
+        padding: 10px;
+    }
+    .TestModal{
+        width: 60%;
+    }
+}
+@media(max-width:380px){
+    .Hero h1{
+        font-size: 40px;
+    }
+}
+@media(max-width:370px){
+    .Login form{
+        gap: 5px;
+    }
+    .Login form input {
+        padding: 1px !important;
+    }
+    .Result__Card span{
+        font-size: 15px;
+    }
+}
+@media(max-width:350px){
+    .RatingTable span{
+        font-size: 8px !important;
+    }
+}
+@media(max-width:335px){
+    .Login form input {
+        width: 40px;
+    }
+}
+@media(max-width:320px){
+    .Footer__wrapper{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .TestModal{
+        width: 70%;
+    }
+}
