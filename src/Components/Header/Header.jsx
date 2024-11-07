@@ -5,7 +5,7 @@ import HeaderMenu from './HeaderMenu';
 import { Spin as Hamburger } from 'hamburger-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from '../../Redux/MyInformation';
-import MonualModal from './MonualModal';
+import ManualModal from './ManualModal';
 
 function Header() {
   const location = useLocation();
@@ -148,7 +148,7 @@ function Header() {
           </div>
         </div>
         <HeaderMenu isOpen={active} onClose={closeMenu} />
-        <MonualModal isOpen={manualModal} onClose={closeManualModal}/>
+        <ManualModal isOpen={manualModal} onClose={closeManualModal}/>
       </header>
 
     </div>

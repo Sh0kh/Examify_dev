@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import logo from '../../images/Examify_Dark.jpg'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import MonualModal from './MonualModal';
+import ManualModal from './ManualModal';
 
 function HeaderMenu({ isOpen, onClose }) {
     const { data } = useSelector((state) => state.data)
@@ -104,7 +104,7 @@ function HeaderMenu({ isOpen, onClose }) {
                     )}
                 </nav>
             </div>
-            <MonualModal isOpen={manualModal} onClose={closeManualModal}/>
+            <ManualModal isOpen={manualModal} onClose={closeManualModal}/>
         </>
     )
 }
