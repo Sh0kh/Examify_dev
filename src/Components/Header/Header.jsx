@@ -49,11 +49,11 @@ function Header() {
 
 
   const openManualModal = () => {
-    setManualModal(true); // Открытие модала
+    setManualModal(true); 
   };
 
   const closeManualModal = () => {
-    setManualModal(false); // Закрытие модала
+    setManualModal(false); 
   };
 
 
@@ -62,7 +62,7 @@ function Header() {
     <div>
       <header className='Header fixed w-full bg-white z-50 py-[15px] border-b-[1px] border-b-MainColor'>
         {location.pathname === '/test' && (
-          <div className='top-0 w-[full] p-[5px] bg-[red] recom hidden'>
+          <div className='top-0 w-[full] p-[5px] bg-[red] recom hidden d'>
             <h1 className='text-center text-[white]'>
               For complete convenience, it is recommended to use a PC
             </h1>
@@ -79,7 +79,7 @@ function Header() {
               <NavLink onClick={handleScrollUp} to={`/`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
                 Home
               </NavLink>
-              <NavLink onClick={handleScrollUp} to={`/test`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-[8px]">
+              <NavLink onClick={handleScrollUp} to={`/test`} className="font-bold  text-[20px] transition-all duration-500 hover:tracking-[8px]">
                 Take exam
               </NavLink>
               {token && (
