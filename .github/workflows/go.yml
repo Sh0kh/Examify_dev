@@ -18,6 +18,6 @@ jobs:
           sshpass -p "Eequalit9chaatho" ssh -o StrictHostKeyChecking=no abdulaziz@158.220.111.34 "
           cd Examify &&
           git pull origin main &&
-          docker build --rm -t examifyfront .  &&
+          docker stop examifyfront && docker rm examifyfront
           docker run -d -p 3020:3000 examifyfront
           "
