@@ -1,0 +1,23 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to Server
+        run: |
+          sshpass -p "Eequalit9chaatho" ssh -o StrictHostKeyChecking=no abdulaziz@158.220.111.34 "
+          cd Examify &&
+          git pull origin main &&
+          docker build --rm -t examifyfront .  &&
+          docker run -d -p 3020:3000 examifyfront
+          "
