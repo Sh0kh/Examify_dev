@@ -12,7 +12,7 @@ function TestItem() {
     const [bookID, setBookID] = useState(null)
     const tests = [
         { name: 'TEST 1', available: true, id: 1 },
-        { name: 'TEST 2', available: false, id: 2 },
+        { name: 'TEST 2', available: true, id: 2 },
         { name: 'TEST 3', available: false, id: 3 },
         { name: 'TEST 4', available: false, id: 4 },
     ];

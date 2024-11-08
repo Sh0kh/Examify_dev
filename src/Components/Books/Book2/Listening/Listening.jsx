@@ -44,27 +44,27 @@ function Listening() {
         setAnswers(updatedAnswers); // Устанавливаем обновленный массив в состояние
     };
 
-    // Play audio only when component is active
+
     useEffect(() => {
         if (isListeningActive) {
             const timer = setTimeout(() => {
-                // audio.play().catch(error => {
-                //     console.error('Audio play failed:', error);
-                // });
+                audio.play().catch(error => {
+                    console.error('Audio play failed:', error);
+                });
             }, 1000);
 
             return () => {
                 clearTimeout(timer);
-                audio.pause(); // Pause audio when the component is deactivated
+                audio.pause(); 
             };
         }
     }, [isListeningActive, audio]);
 
     useEffect(() => {
-        setIsListeningActive(true); // Mark component as active when loaded
+        setIsListeningActive(true); 
 
         return () => {
-            setIsListeningActive(false); // Mark component as inactive when unmounted or navigated away
+            setIsListeningActive(false); 
         };
     }, []);
 
@@ -84,7 +84,7 @@ function Listening() {
                 userAnswer: userAnswersArray 
             };
 
-            await axios.post('/ielts/exam/attempt/create/inlin3e', answer, {
+            await axios.post('/ielts/exam/attempt/create/inline', answer, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`, 
                 },
@@ -132,6 +132,7 @@ function Listening() {
             },
         });
     };
+
 
     return (
         <div className='Listening'>

@@ -37,7 +37,7 @@ function Header() {
   };
 
   const handleOutsideClick = (event) => {
-    if (event.target.classList.contains('modal-overlay')) {
+    if (event.target.classList.contains('modal-overlay2')) {
       setModal(false);
     }
   };
@@ -125,7 +125,7 @@ function Header() {
               </button>
               {modal && (
                 <div
-                  className='fixed inset-0 z-50 modal-overlay'
+                  className='fixed inset-0 z-50 modal-overlay2'
                   onClick={handleOutsideClick}
                 >
                   <div className='fixed right-[16%] border-[1px] border-MainColor top-[80px] bg-white rounded-[8px] p-[10px] shadow-2xl'>
