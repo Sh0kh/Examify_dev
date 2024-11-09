@@ -17,14 +17,14 @@ jobs:
           cd Examify-FRONT &&
           git pull origin main &&
           docker build --rm -t examifyfront . &&
-          # Stop and remove any existing container named 'examifyfront'
-          if [ \$(docker ps -aq -f name=examifyfront) ]; then
-            docker stop examifyfront && docker rm examifyfront
+          # Stop and remove any existing container named 'examify_frontend'
+          if [ \$(docker ps -aq -f name=examify_frontend) ]; then
+            docker stop examify_frontend && docker rm examify_frontend
           fi
           # Free up port 3020 if it's already in use
           if lsof -i:3020 -t >/dev/null; then
             kill -9 \$(lsof -i:3020 -t)
           fi
-          # Run the new container
-          docker run -d -p 3020:3000 --name examifyfront examifyfront
+          # Run the new container with a custom name 'examify_frontend'
+          docker run -d -p 3020:3000 --name examify_frontend examifyfront
           "
