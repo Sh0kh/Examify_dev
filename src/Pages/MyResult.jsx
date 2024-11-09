@@ -32,7 +32,7 @@ function MyResult() {
           size: 150,
         },
       });
-
+      
       if (Array.isArray(response.data.results) && response.data.results.length > 0) {
         setData((prevData) => {
           // Check for duplicates before adding new items

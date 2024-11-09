@@ -21,7 +21,7 @@ function Footer() {
                         </div>
                         <div className='flax items-center justify-center'>
                             <h2 className='text-[white] text-[20px]'>
-                                Created from
+                                Created by
                             </h2>
                             <div>
                                 <a href="https://itliveacademy.uz/" target="_blank" rel="noopener noreferrer">

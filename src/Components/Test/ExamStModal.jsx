@@ -13,10 +13,16 @@ function ExamStModal({ isOpen, onClose, data }) {
 
   console.log(data)
 
+  console.log(data)
+
   const ExamStart = () => {
     // Dispatch remainSection to Redux
     dispatch(setRemainSection(remainSection));
-    navigate(`/book2/${id}`);
+    if(data?.bookName === 'CAMBRIDGE (TEST 1)'){
+      navigate(`/book1/${id}`);
+    }else(
+      navigate(`/book2/${id}`)
+    )
   };
   
 
