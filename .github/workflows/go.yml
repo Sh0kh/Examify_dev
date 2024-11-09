@@ -16,8 +16,9 @@ jobs:
       - name: Deploy to Server
         run: |
           sshpass -p "Eequalit9chaatho" ssh -o StrictHostKeyChecking=no abdulaziz@158.220.111.34 "
-          cd Examify &&
+          cd Examify-FRONT &&
           git pull origin main &&
-          docker stop examifyfront && docker rm examifyfront
-          docker run -d -p 3020:3000 examifyfront
+          docker build --rm -t examifyfront .
+          docker rm -f examifyfront
+          docker run -d -p 3020:3000 --name examifyfront
           "
