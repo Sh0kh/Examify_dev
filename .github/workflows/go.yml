@@ -20,5 +20,5 @@ jobs:
           git pull origin main &&
           docker build --rm -t examifyfront .
           docker rm -f examifyfront
-          docker run -d -p 3020:3000 --name examifyfront
+          docker run -d -p 3020:3000 --name examifyfront examifyfront
           "
