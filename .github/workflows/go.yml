@@ -17,11 +17,11 @@ jobs:
           cd Examify-FRONT &&
           git pull origin main &&
           docker build --rm -t examifyfront . &&
-          # Check if the container exists and remove if it does
+          # Stop and remove any existing container named 'examifyfront'
           if [ \$(docker ps -aq -f name=examifyfront) ]; then
-            docker rm -f examifyfront
+            docker stop examifyfront && docker rm examifyfront
           fi
-          # Stop any process using port 3020 to prevent conflicts
+          # Free up port 3020 if in use
           if lsof -i:3020 -t; then
             kill -9 \$(lsof -i:3020 -t)
           fi
