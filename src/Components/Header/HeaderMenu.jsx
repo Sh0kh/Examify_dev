@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from '../../images/Examify_Dark.jpg'
+import logo from '../../images/logo examfiy.png'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import ManualModal from './ManualModal';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../../images/Examify.png';
+import logo from '../../images/logo examfiy. asl.png';
 import { NavLink, useLocation } from 'react-router-dom';
 import HeaderMenu from './HeaderMenu';
 import { Spin as Hamburger } from 'hamburger-react';

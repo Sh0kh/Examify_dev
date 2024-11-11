@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../images/Examify_Dark.jpg'
+import logo from '../../images/logo examfiy.png'
 function Footer() {
     return (
         <footer className='bg-MainColor p-[30px]'>
