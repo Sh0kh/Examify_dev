@@ -4,6 +4,7 @@ import Service from '../Components/HomePage/Service'
 import Result from '../Components/HomePage/Result'
 import FAQ from '../Components/HomePage/FAQ'
 import Footer from '../Components/Footer/Footer'
+import WarningModal from '../Components/Modal/WarningModal'
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
         <Result/>
         <FAQ/>
         <Footer/>
+        <WarningModal/>
       </main>
   )
 }
