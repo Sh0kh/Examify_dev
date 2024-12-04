@@ -22,6 +22,8 @@ import Speaking from './Components/Result/Speaking';
 import PrivateRoute from './Components/PrivateRoute';
 import Bonus from './Pages/Bonus';
 import Book2 from './Components/Books/Book2/Book2';
+import MultiLevel from './Pages/MultiLevel';
+import Exam from './Components/Multi-Level/Exam';
 
 function App() {
   useEffect(() => {
@@ -55,6 +57,7 @@ function App() {
             <Route path='/contact' element={<Contact />} />
             <Route element={<WebLayout />}>
               <Route index element={<Home />} />
+              <Route path='/multi-level' element={<MultiLevel/>}/>
               <Route path='/login' element={<Login />} />
               <Route path='/test' element={<Test />} />
               <Route path='/faq' element={<FAQ />} />
@@ -67,8 +70,10 @@ function App() {
               <Route path='/speaking/:ID' element={<PrivateRoute element={<Speaking />} />} />
             </Route>
             <Route path='/book1/:ID' element={<PrivateRoute element={<Book1 />} />} />
+            <Route path='/multi-level/exam' element={<Exam/>}/>
           </Route>
           <Route path='/book2/:ID' element={<PrivateRoute element={<Book2 />} />} />
+
         </Routes>
       </Router>
 

@@ -79,6 +79,9 @@ function Header() {
               <NavLink onClick={handleScrollUp} to={`/`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
                 Home
               </NavLink>
+              <NavLink onClick={handleScrollUp} to={`/multi-level`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
+                Multi level
+              </NavLink>
               <NavLink onClick={handleScrollUp} to={`/test`} className="font-bold  text-[20px] transition-all duration-500 hover:tracking-[8px]">
                 Take exam
               </NavLink>
