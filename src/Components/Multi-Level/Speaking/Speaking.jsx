@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import Part1 from './Part1/Part1.jsx';
 import Part2 from './Part2/Part2.jsx';
 
 
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 
 
 function Writing() {
     const navigate = useNavigate();
-    const { ID } = useParams();
     const [active, setActive] = useState(1);
     const dispatch = useDispatch();
 

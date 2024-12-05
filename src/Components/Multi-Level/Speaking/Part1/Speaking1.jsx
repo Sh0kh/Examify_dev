@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 
 function Speaking1() {
@@ -16,11 +14,10 @@ function Speaking1() {
     const analyserRef = useRef(null);
     const microphoneRef = useRef(null);
     const processorRef = useRef(null);
-    const { ID } = useParams();
-
     if(audioBlob){
+        setSuc(false)
+        setLoading(null)
     }
-
     useEffect(() => {
         return () => {
             clearInterval(timerRef.current);
