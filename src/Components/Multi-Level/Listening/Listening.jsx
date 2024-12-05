@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,  } from 'react';
 import Part1 from './Part1';
 import Part2 from './Part2';
 import Part3 from './Part3';
@@ -7,14 +7,12 @@ import Part5 from './Part5'
 import Part6 from './Part6'
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate,  } from 'react-router-dom';
 
 
 function Listening() {
     const navigate = useNavigate();
-    const { ID } = useParams();
     const [active, setActive] = useState(1);
-    const [answers, setAnswers] = useState(Array(40).fill('')); // Adjust size if needed
     const dispatch = useDispatch();
 
 
