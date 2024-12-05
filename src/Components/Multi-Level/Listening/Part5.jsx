@@ -1,5 +1,4 @@
 export default function Part5() {
-    const animals = ["A", "B", "C", "D", "E", "F"];
 
     return (
         <div className="p-4  space-y-8 pb-[100px]">

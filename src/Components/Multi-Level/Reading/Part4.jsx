@@ -3,7 +3,6 @@ import React from 'react'
 
 function Part4() {
 
-    const options = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",];
 
     return (
         <div className='Readin__wrapper overflow-hidden flex gap-[20px] border-t-[2px] pt-[10px]'>
