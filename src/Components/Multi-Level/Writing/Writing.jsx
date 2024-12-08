@@ -32,7 +32,7 @@ function Writing() {
 
     const handleNext = () => {
         dispatch(setComponent('SPEAKING'));
-        
+
     };
 
 

@@ -14,6 +14,7 @@ function Speaking1() {
     const analyserRef = useRef(null);
     const microphoneRef = useRef(null);
     const processorRef = useRef(null);
+    
     if(audioBlob){
         setSuc(false)
         setLoading(null)
@@ -26,10 +27,10 @@ function Speaking1() {
     }, []);
     const startRecording = async () => {
         try {
+
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const recorder = new MediaRecorder(stream);
             mediaRecorderRef.current = recorder;
-
             const audioChunks = [];
             recorder.ondataavailable = (event) => {
                 audioChunks.push(event.data);

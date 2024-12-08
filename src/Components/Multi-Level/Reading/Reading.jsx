@@ -25,11 +25,11 @@ function Reading() {
     };
 
     const parts = [
-        { id: 1, component: <Part1  /> },
+        { id: 1, component: <Part1 /> },
         { id: 2, component: <Part2 /> },
-        { id: 3, component: <Part3  /> },
-        { id: 4, component: <Part4  /> },
-        { id: 5, component: <Part5  /> },
+        { id: 3, component: <Part3 /> },
+        { id: 4, component: <Part4 /> },
+        { id: 5, component: <Part5 /> },
 
     ];
 
@@ -72,7 +72,9 @@ function Reading() {
                             }}
                             className={`border-[1px] border-[#D6D4D4] px-[10px] py-[7px] font-bold bg-[#ababab83] ${active === part.id ? 'bg-transparent' : ''}`}
                         >
-                            Part {part.id}
+                            <span className='Part__words'>
+                                Part
+                            </span> {part.id}
                         </button>
                     ))}
                 </div>

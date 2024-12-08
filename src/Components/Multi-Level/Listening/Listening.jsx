@@ -1,4 +1,4 @@
-import React, { useState,  } from 'react';
+import React, { useState, } from 'react';
 import Part1 from './Part1';
 import Part2 from './Part2';
 import Part3 from './Part3';
@@ -7,7 +7,7 @@ import Part5 from './Part5'
 import Part6 from './Part6'
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
-import { useNavigate,  } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 
 
 function Listening() {
@@ -25,12 +25,12 @@ function Listening() {
     };
 
     const parts = [
-        { id: 1, component: <Part1  /> },
+        { id: 1, component: <Part1 /> },
         { id: 2, component: <Part2 /> },
-        { id: 3, component: <Part3  /> },
-        { id: 4, component: <Part4  /> },
-        { id: 5, component: <Part5  /> },
-        { id: 6, component: <Part6  /> },
+        { id: 3, component: <Part3 /> },
+        { id: 4, component: <Part4 /> },
+        { id: 5, component: <Part5 /> },
+        { id: 6, component: <Part6 /> },
     ];
 
 
@@ -72,7 +72,10 @@ function Listening() {
                             }}
                             className={`border-[1px] border-[#D6D4D4] px-[10px] py-[7px] font-bold bg-[#ababab83] ${active === part.id ? 'bg-transparent' : ''}`}
                         >
-                            Part {part.id}
+                            <span className='Part__words'>
+                                Part
+                            </span>
+                             {part.id}
                         </button>
                     ))}
                 </div>
