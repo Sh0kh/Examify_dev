@@ -6,6 +6,7 @@ import Part2 from './Part2/Part2.jsx';
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
 import { useNavigate, } from 'react-router-dom';
+import Part3 from './Part3/Part3.jsx';
 
 
 function Writing() {
@@ -25,6 +26,7 @@ function Writing() {
     const parts = [
         { id: 1, component: <Part1 /> },
         { id: 2, component: <Part2 /> },
+        { id: 3, component: <Part3/> },
     ];
 
 
