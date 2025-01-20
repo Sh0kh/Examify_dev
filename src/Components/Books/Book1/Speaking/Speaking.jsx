@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../../Redux/ComponentSlice';
 import { useNavigate } from 'react-router-dom';
 
+
 function Speaking() {
     const navigate = useNavigate();
     const [active, setActive] = useState(1); // Part 1 is active by default

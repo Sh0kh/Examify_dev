@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import ExamStModal from '../Components/Test/ExamStModal';
 import { NavLink } from 'react-router-dom';
+import { axiosAPI1 } from '../Service/axios'
 
 function MyResult() {
   const [data, setData] = useState([]);
@@ -23,7 +24,7 @@ function MyResult() {
 
     isLoadingRef.current = true;
     try {
-      const response = await axios.get('/user/get-my-results', {
+      const response = await axiosAPI1.get('/user/get-my-results', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -32,7 +33,7 @@ function MyResult() {
           size: 150,
         },
       });
-      
+
       if (Array.isArray(response.data.results) && response.data.results.length > 0) {
         setData((prevData) => {
           // Check for duplicates before adding new items

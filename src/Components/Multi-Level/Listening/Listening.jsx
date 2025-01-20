@@ -8,9 +8,11 @@ import Part6 from './Part6'
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
 import { useNavigate, } from 'react-router-dom';
+import MultiLevelStartModal from '../MultiLevelStartModal';
 
 
 function Listening() {
+    const [StartModal, setStartModal] = useState(true)
     const navigate = useNavigate();
     const [active, setActive] = useState(1);
     const dispatch = useDispatch();
@@ -39,8 +41,9 @@ function Listening() {
 
     const handleNext = () => {
         dispatch(setComponent('READING'));
-
     };
+
+
 
 
 
@@ -49,7 +52,7 @@ function Listening() {
             <div className='Book__header p-[10px] bg-[#b4b0b08c]'>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-[red]'>Listening exam</h2>
-                    <h2> 
+                    <h2>
                         60:00
                     </h2>
                     <div className='flex items-center gap-[10px]'>
@@ -78,7 +81,7 @@ function Listening() {
                             <span className='Part__words'>
                                 Part
                             </span>
-                             {part.id}
+                            {part.id}
                         </button>
                     ))}
                 </div>
@@ -86,6 +89,7 @@ function Listening() {
                     {parts.find(part => part.id === active)?.component}
                 </div>
             </div>
+            <MultiLevelStartModal isOpen={StartModal} onClose={()=>setStartModal(false)} />
         </div>
     );
 }

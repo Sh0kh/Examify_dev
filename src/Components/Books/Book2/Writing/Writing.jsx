@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import {axiosAPI1} from '../../../../Service/axios'
 
 function Writing() {
     const { ID } = useParams()
@@ -30,7 +31,7 @@ function Writing() {
                 ],
                 examId: ID
             }
-            await axios.post('/ielts/exam/attempt/create/outline-writing', userAnswer, {
+            await axiosAPI1.post('/ielts/exam/attempt/create/outline-writing', userAnswer, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

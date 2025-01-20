@@ -1,4 +1,4 @@
-import axios from '../../Service/axios';
+import axios, { axiosAPI1 } from '../../Service/axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ReactLoading from 'react-loading';
@@ -13,7 +13,7 @@ function Result() {
 
     const getResult = async () => {
         try {
-            const response = await axios.get('/ielts/exam/result/top-exam-result/MONTHLY?page=0&size=5');
+            const response = await axiosAPI1.get('/ielts/exam/result/top-exam-result/MONTHLY?page=0&size=5');
             setData(response.data.results || []);
         } catch (error) {
             console.log(error);
@@ -116,19 +116,19 @@ function Result() {
                                                 </svg>
                                             ) : (
                                                 <span className='font-bold text-[15px] bg-MainColor text-[white] px-[8px] py-[3px] rounded-[50%]'>
-                          {index + 1}
-                        </span>
+                                                    {index + 1}
+                                                </span>
                                             )}
                                             <span className='text-[20px] w-[50px]'>{i?.user?.name || "Unknown"}</span>
                                         </div>
                                         <span className='px-[20px] py-[10px] border-[2px] border-MainColor rounded-[8px] bg-MainColor text-[white] duration-300 hover:bg-transparent hover:text-MainColor'>
-                      {i.overall}
-                    </span>
+                                            {i.overall}
+                                        </span>
                                         <div>
                                             <span className='text-[20px] font-bold block'>{i.createdAt.split('T')[0]}</span>
                                             <span className='block text-center'>
-                        {i.createdAt.slice(11, 16)}
-                      </span>
+                                                {i.createdAt.slice(11, 16)}
+                                            </span>
                                         </div>
                                     </div>
                                 ))

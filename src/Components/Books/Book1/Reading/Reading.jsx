@@ -5,9 +5,9 @@ import Part3 from './Part3';
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../../Redux/ComponentSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { axiosAPI1 } from '../../../../Service/axios'
 
 function Reading() {
     const navigate = useNavigate()
@@ -52,7 +52,7 @@ function Reading() {
                 sectionType: 'READING',
                 userAnswer: userAnswersArray
             }
-            await axios.post('/ielts/exam/attempt/create/inline', answer, {
+            await axiosAPI1.post('/ielts/exam/attempt/create/inline', answer, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

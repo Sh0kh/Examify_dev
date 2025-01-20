@@ -1,4 +1,4 @@
-import axios from '../../Service/axios';
+import axios, { axiosAPI1 } from '../../Service/axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,7 +12,7 @@ function TestModal({ isOpen, onClose, id }) {
 
     const CreateExam = async () => {
         try {
-            const response = await axios.post(
+            const response = await axiosAPI1.post(
                 '/ielts/exam/create',
                 null,
                 {

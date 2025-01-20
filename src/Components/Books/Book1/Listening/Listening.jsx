@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import audioFile from './listening_audio_dce7445b-535f-4522-80bd-9eefb6bf9abc.mp3';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { axiosAPI1 } from '../../../../Service/axios'
 
 
 function Listening() {
@@ -84,7 +85,7 @@ function Listening() {
                 userAnswer: userAnswersArray 
             };
 
-            await axios.post('/ielts/exam/attempt/create/inline', answer, {
+            await axiosAPI1.post('/ielts/exam/attempt/create/inline', answer, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`, 
                 },

@@ -3,13 +3,15 @@ import Top3 from '../Components/Rating/Top3'
 import Table from '../Components/Rating/Table'
 import axios from '../Service/axios'
 import ReactLoading from 'react-loading';
+import { axiosAPI1 } from '../Service/axios'
+
 function Rating() {
 
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const getResult = async ()=>{
     try{
-      const response = await axios.get('/ielts/exam/result/top-exam-result/MONTHLY?page=0&size=10')
+      const response = await axiosAPI1.get('/ielts/exam/result/top-exam-result/MONTHLY?page=0&size=10')
       setData(response.data.results || []);
     }catch(error){
       console.log(error);

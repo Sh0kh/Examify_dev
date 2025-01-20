@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import { axiosAPI1 } from '../../../../../Service/axios'
 
 function Speaking1() {
     const [isRecording, setIsRecording] = useState(false);
@@ -18,7 +19,7 @@ function Speaking1() {
     const processorRef = useRef(null);
     const { ID } = useParams();
 
-    if(audioBlob){
+    if (audioBlob) {
     }
 
     useEffect(() => {
@@ -93,7 +94,7 @@ function Speaking1() {
             console.error('Error accessing microphone', error);
         }
     };
-    
+
 
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
@@ -128,7 +129,7 @@ function Speaking1() {
         setLoading(true);
 
         try {
-            const response = await axios.post(
+            const response = await axiosAPI1.post(
                 `/ielts/exam/attempt/create/outline-speaking/${ID}`,
                 formData,
                 {
@@ -160,7 +161,7 @@ function Speaking1() {
             <div className='border-[2px] p-[20px] mt-[20px]'>
                 <h2 className='font-bold text-[30px]'>Part 3</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
-                1. Let's talk about family occasions now. When do families celebrate together in your country ?
+                    1. Let's talk about family occasions now. When do families celebrate together in your country ?
                 </p>
                 {loading ? (
                     <div className='flex items-center justify-center'>

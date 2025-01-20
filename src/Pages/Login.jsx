@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchData } from '../Redux/MyInformation';
 import { useNavigate } from 'react-router-dom';
+import { axiosAPI1 } from '../Service/axios'
+
 
 function Login() {
     const navigate = useNavigate();
@@ -82,7 +84,7 @@ function Login() {
         const auth = async () => {
             try {
                 const code = values.join('');
-                const response = await axios.post(`/auth/login/${code}`);
+                const response = await axiosAPI1.post(`/auth/login/${code}`);
                 showSuccessToast();
                 localStorage.setItem('token', response.data.message);
                 setActive(true);
@@ -107,7 +109,7 @@ function Login() {
                 name: edit.name,
                 surname: edit.surname
             };
-            await axios.put(`/user/update-information`, EditData, {
+            await axiosAPI1.put(`/user/update-information`, EditData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

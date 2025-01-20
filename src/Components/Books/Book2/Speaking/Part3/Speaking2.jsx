@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { axiosAPI1 } from '../../../../../Service/axios'
+
 import ReactLoading from 'react-loading';
 
 function Speaking2() {
@@ -18,7 +20,7 @@ function Speaking2() {
     const processorRef = useRef(null);
     const { ID } = useParams();
 
-    if(audioBlob){
+    if (audioBlob) {
     }
 
     useEffect(() => {
@@ -93,7 +95,7 @@ function Speaking2() {
             console.error('Error accessing microphone', error);
         }
     };
-    
+
 
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
@@ -128,7 +130,7 @@ function Speaking2() {
         setLoading(true);
 
         try {
-            const response = await axios.post(
+            const response = await axiosAPI1.post(
                 `/ielts/exam/attempt/create/outline-speaking/${ID}`,
                 formData,
                 {
@@ -160,7 +162,7 @@ function Speaking2() {
             <div className='border-[2px] p-[20px] mt-[20px]'>
                 <h2 className='font-bold text-[30px]'>Part 3</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
-                2. How often do all the generations in a family come together in your country ?
+                    2. How often do all the generations in a family come together in your country ?
                 </p>
                 {loading ? (
                     <div className='flex items-center justify-center'>

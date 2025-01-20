@@ -70,7 +70,7 @@ function App() {
               <Route path='/speaking/:ID' element={<PrivateRoute element={<Speaking />} />} />
             </Route>
             <Route path='/book1/:ID' element={<PrivateRoute element={<Book1 />} />} />
-            <Route path='/multi-level/exam' element={<Exam/>}/>
+            <Route path='/multi-level/exam/:ID' element={<Exam/>}/>
           </Route>
           <Route path='/book2/:ID' element={<PrivateRoute element={<Book2 />} />} />
 

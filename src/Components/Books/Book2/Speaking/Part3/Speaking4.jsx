@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import { axiosAPI1 } from '../../../../../Service/axios'
+
 
 function Speaking4() {
     const [isRecording, setIsRecording] = useState(false);
@@ -18,7 +20,7 @@ function Speaking4() {
     const processorRef = useRef(null);
     const { ID } = useParams();
 
-    if(audioBlob){
+    if (audioBlob) {
     }
 
     useEffect(() => {
@@ -93,7 +95,7 @@ function Speaking4() {
             console.error('Error accessing microphone', error);
         }
     };
-    
+
 
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
@@ -128,7 +130,7 @@ function Speaking4() {
         setLoading(true);
 
         try {
-            const response = await axios.post(
+            const response = await axiosAPI1.post(
                 `/ielts/exam/attempt/create/outline-speaking/${ID}`,
                 formData,
                 {
@@ -160,7 +162,7 @@ function Speaking4() {
             <div className='border-[2px] p-[20px] mt-[20px]'>
                 <h2 className='font-bold text-[30px]'>Part 3</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
-                4. Do you think it is a good thing for parents to help their children with schoolwork ?
+                    4. Do you think it is a good thing for parents to help their children with schoolwork ?
                 </p>
                 {loading ? (
                     <div className='flex items-center justify-center'>
