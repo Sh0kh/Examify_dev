@@ -1,9 +1,10 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosAPI2 } from "../../Service/axios";
 import Swal from 'sweetalert2'
 
 
 export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
+    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 
     const navigate = useNavigate()
@@ -14,10 +15,11 @@ export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
             formData.append('mock_exam_id', id);
             formData.append('type', type);
 
-             await axiosAPI2.post(`/user/buy-exam`, formData, {
+            await axiosAPI2.post(`/user/buy-exam`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data',
+                    // 'X-CSRF-TOKEN': "tokenvaluetobeinserted235kwgeiOIulgsk",
                 },
             });
 

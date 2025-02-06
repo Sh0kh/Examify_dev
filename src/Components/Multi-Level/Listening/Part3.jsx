@@ -1,30 +1,32 @@
-export default function Part3() {
-    const animals = ["A) Leopard", "B) Gorilla", "C) Elephant", "D) Tiger", "E) Lion", "F) Bear"];
+export default function Part3({ data, onAnswerSelect, selectedAnswers }) {
+    const handleSelectChange = (question_id, event) => {
+        const answer_id = event.target.value;
+        onAnswerSelect(question_id, answer_id);
+    };
 
     return (
-        <div className="p-4  space-y-8 pb-[100px]">
-            {/* Инструкция */}
+        <div className="p-4 space-y-8 pb-[100px]">
             <div>
-                <p className="text-lg font-semibold">
-                    You will hear people speaking about different wild animals. Match each speaker (15-18) to the animals (A-F). There are TWO EXTRA animals which you do not need to use.
-                </p>
+                <p className="text-lg font-semibold">{data?.description}</p>
             </div>
-
-            {/* Выпадающие списки для спикеров */}
             <div className="space-y-4 max-w-[700px]">
-                {Array.from({ length: 4 }, (_, i) => (
-                    <div key={i} className="flex items-center space-x-4">
+                {data?.questions?.map((i, index) => (
+                    <div key={index} className="flex items-center space-x-4">
                         <span className="bg-MainColor text-[white] p-[5px] rounded-[5px]">
-                            {15 + i}
+                            {15 + index}
                         </span>
-                        <span className="text-md font-medium">Speaker {i + 1}</span>
-                        <select className="border w-[200px] border-gray-300 rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="" disabled selected>
-                                Select an animal
+                        <span className="text-md font-medium">Speaker... {index + 1}</span>
+                        <select
+                            className="border w-[200px] border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onChange={(e) => handleSelectChange(i.id, e)}
+                            value={selectedAnswers[i.id] || ""} // Запоминает выбранный ответ
+                        >
+                            <option value="" disabled>
+                                Select
                             </option>
-                            {animals.map((animal, index) => (
-                                <option key={index} value={animal}>
-                                    {animal}
+                            {i?.answers?.map((answer, index) => (
+                                <option key={index} value={answer?.id}>
+                                    {answer?.answer || answer}
                                 </option>
                             ))}
                         </select>

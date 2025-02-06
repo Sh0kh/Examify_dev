@@ -1,129 +1,40 @@
-export default function Part5() {
+export default function Part5({ data, onAnswerSelect, selectedAnswers }) {
+
+    console.log(data)
 
     return (
         <div className="p-4  space-y-8 pb-[100px]">
-            {/* Инструкция */}
             <div>
                 <p className="text-lg font-semibold">
-                    You will hear three extracts. Choose the correct answer (A, B or C) for each question (24-29). There are TWO questions for each extract.
-                    Mark your answers on the answer sheet.              </p>
+                    {data?.description}
+                </p>
             </div>
-
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
+            {data?.questions?.map((i, index) => (
+                < div key={index}>
+                    <div className="flex items-center mb-[10px]">
+                        <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
+                            {24 + index}
+                        </div>
+                        <p className="font-bold ">{i?.question}</p>
                     </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
-                </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
+                    <div className="space-y-2">
+                        {i?.answers?.map((answer, aIndex) => (
+                            <label key={aIndex} className="block">
+                                <input
+                                    type="radio"
+                                    name={`question-${index}`}
+                                    className="mr-2"
+                                    value={answer.id}
+                                    checked={selectedAnswers[i.id] === answer.id}
+                                    onChange={() => onAnswerSelect(i.id, answer.id)}
+                                />
+                                {answer?.answer}
+                            </label>
+                        ))}
                     </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
                 </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
-                    </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
-                </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
-                    </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
-                </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
-                    </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
-                </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div className="flex items-center mb-[10px]">
-                    <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
-                        24
-                    </div>
-                    <p className="font-bold ">One thing that attracted Emma to Malta was ...</p>
-                </div>
-                <div className="space-y-2">
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> A) I’d love to.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> B) It’s usually Ok.
-                    </label>
-                    <label className="block">
-                        <input type="checkbox" className="mr-2" /> C) We’ve got purple walls.
-                    </label>
-                </div>
-            </div>
-
-        </div>
+            ))
+            }
+        </div >
     );
 }

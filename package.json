@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "audio-converter": "^1.0.13",
     "axios": "^1.7.7",
+    "dompurify": "^3.2.4",
     "gsap": "^3.12.5",
     "hamburger-react": "^2.5.1",
     "lamejs": "^1.2.1",

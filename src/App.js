@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 import AppLayout from './layouts/AppLayout';
 import WebLayout from './layouts/WebLayout';
@@ -26,28 +26,28 @@ import MultiLevel from './Pages/MultiLevel';
 import Exam from './Components/Multi-Level/Exam';
 
 function App() {
-  useEffect(() => {
-    // Инициализация Яндекс Метрики
-    (function (m, e, t, r, i, k, a) {
-      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-      m[i].l = 1 * new Date();
-      k = e.createElement(t);
-      a = e.getElementsByTagName(t)[0];
-      k.async = 1;
-      k.src = r;
-      a.parentNode.insertBefore(k, a);
-    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  // useEffect(() => {
+  //   // Инициализация Яндекс Метрики
+  //   (function (m, e, t, r, i, k, a) {
+  //     m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+  //     m[i].l = 1 * new Date();
+  //     k = e.createElement(t);
+  //     a = e.getElementsByTagName(t)[0];
+  //     k.async = 1;
+  //     k.src = r;
+  //     a.parentNode.insertBefore(k, a);
+  //   })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    // Инициализация счётчика
-    if (window.ym) {
-      window.ym(98863503, "init", {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true,
-        webvisor: true
-      });
-    }
-  }, []);
+  //   // Инициализация счётчика
+  //   if (window.ym) {
+  //     window.ym(98863503, "init", {
+  //       clickmap: true,
+  //       trackLinks: true,
+  //       accurateTrackBounce: true,
+  //       webvisor: true
+  //     });
+  //   }
+  // }, []);
 
   return (
     <Provider store={store}>
@@ -78,11 +78,11 @@ function App() {
       </Router>
 
       {/* Поддержка пользователей с отключенным JavaScript */}
-      <noscript>
+      {/* <noscript>
         <div>
           <img src="https://mc.yandex.ru/watch/98863503" style={{ position: "absolute", left: "-9999px" }} alt="" />
         </div>
-      </noscript>
+      </noscript> */}
     </Provider>
   );
 }
