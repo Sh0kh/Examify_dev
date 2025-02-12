@@ -15,7 +15,8 @@ export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
             formData.append('mock_exam_id', id);
             formData.append('type', type);
 
-            await axiosAPI2.post(`/user/buy-exam`, formData, {
+
+            const response = await axiosAPI2.post(`/user/buy-exam`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data',
@@ -23,7 +24,7 @@ export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
                 },
             });
 
-            navigate(`/multi-level/exam/${id}`)
+            navigate(`/multi-level/exam/${response?.data?.exam?.id}`)
             Swal.fire({
                 title: 'Muvaffaqiyatli!',
                 icon: 'success',

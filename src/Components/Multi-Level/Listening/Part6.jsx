@@ -5,20 +5,15 @@ export default function Part2({ data, onAnswerSelect }) {
     // Генерируем инпуты для каждого вопроса
     const processedHtml = data?.questions
         ?.map((question) => {
-            let answerIndex = 0; // Индекс для перебора ответов
-
             return question.question.replace(/\{inputext\}/g, () => {
-                const answer = question.answers?.[answerIndex] || {}; // Берем соответствующий answer_id
-                answerIndex++; // Увеличиваем индекс ответа
-
                 return `<input type="text"
                 class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
-                data-question-id="${question.id}"
-                data-answer-id="${answer.id || ''}" 
+                data-question-id="${question.id}" 
             />`;
             });
         })
         .join("");
+
 
 
 

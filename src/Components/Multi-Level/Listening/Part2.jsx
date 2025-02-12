@@ -4,30 +4,27 @@ import DOMPurify from "dompurify";
 export default function Part2({ data, onAnswerSelect }) {
     // Генерируем инпуты для каждого вопроса
     const processedHtml = data?.questions
-        ?.map((question) => {
-            let answerIndex = 0; // Индекс для перебора ответов
-
+        ?.map((question, qIndex) => {
+            let inputIndex = 0;
             return question.question.replace(/\{inputext\}/g, () => {
-                const answer = question.answers?.[answerIndex] || {}; // Берем соответствующий answer_id
-                answerIndex++; // Увеличиваем индекс ответа
-
+                const answerId = `${question.id}-${inputIndex}`; // Уникальный answer_id
+                inputIndex++;
                 return `<input type="text"
-                class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
-                data-question-id="${question.id}"
-                data-answer-id="${answer.id || ''}" 
-            />`;
+                    class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
+                    data-question-id="${question.id}"
+                    data-answer-id="${answerId}"
+                />`;
             });
         })
         .join("");
 
-
-
     useEffect(() => {
         const inputs = document.querySelectorAll(".part2-input");
+
         const updateAnswers = () => {
             const updatedAnswers = Array.from(inputs).map(input => ({
                 question_id: input.dataset.questionId,
-                answer_id: input.dataset.answerId || null, // Привязываем answer_id
+                answer_id: input.dataset.answerId, // Теперь у каждого ответа свой ID
                 question_type: "writing",
                 answer_text: input.value
             }));
@@ -36,13 +33,10 @@ export default function Part2({ data, onAnswerSelect }) {
         };
 
         inputs.forEach(input => input.addEventListener("input", updateAnswers));
-
         return () => {
             inputs.forEach(input => input.removeEventListener("input", updateAnswers));
         };
     }, [data, onAnswerSelect]);
-
-
 
     return (
         <div className="p-4 mx-auto space-y-8 pb-[100px]">

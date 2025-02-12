@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
+import { axiosAPI2 } from '../../../../Service/axios';
 
-function Speaking3() {
+function SpeakingCard({ data, index, onResponse }) {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
-    const [timeLeft, setTimeLeft] = useState(30); 
-    const [volume, setVolume] = useState(0); // State to track volume level
-    const [suc, setSuc] = useState(null); // State to track success of audio submission
-    const [loading, setLoading] = useState(false); // Set initial loading state to false
+    const [timeLeft, setTimeLeft] = useState(30);
+    const [volume, setVolume] = useState(0);
+    const [suc, setSuc] = useState(null);
+    const [loading, setLoading] = useState(false);
     const timerRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const audioContextRef = useRef(null);
@@ -15,23 +16,20 @@ function Speaking3() {
     const microphoneRef = useRef(null);
     const processorRef = useRef(null);
 
-    if(audioBlob){
-        setSuc(false)
-        setLoading(null)
-    }
+
+
+
     useEffect(() => {
         return () => {
-            clearInterval(timerRef.current); // Clear the timer on component unmount
-            stopRecording(); // Ensure any ongoing recording is stopped
+            clearInterval(timerRef.current);
+            stopRecording();
         };
     }, []);
-
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const recorder = new MediaRecorder(stream);
             mediaRecorderRef.current = recorder;
-
             const audioChunks = [];
             recorder.ondataavailable = (event) => {
                 audioChunks.push(event.data);
@@ -92,11 +90,12 @@ function Speaking3() {
         }
     };
 
+
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
             setIsRecording(false);
-            clearInterval(timerRef.current); // Clear the timer when recording is stopped
+            clearInterval(timerRef.current);
         }
     };
 
@@ -115,62 +114,100 @@ function Speaking3() {
         analyserRef.current = null;
         processorRef.current = null;
         audioContextRef.current = null;
-        setVolume(0); // Reset volume
+        setVolume(0);
     };
 
-    
+
+
+
+    const sendAudio = async () => {
+        if (!audioBlob) return;
+        try {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.ogg');
+            formData.append('questionId', data.id); // Предполагаем, что data содержит id вопроса
+
+            const response = await axiosAPI2.post('/user/upload-speaking', formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            setSuc(true);
+            if (onResponse) {
+                onResponse({
+                    file_path: response.data?.audio_path,
+                    question_id: data.id,
+                    question_type: 'speaking'
+                });
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            setSuc(false);
+            if (onResponse) {
+                onResponse({
+                    status: 'error',
+                    error: error,
+                    questionId: data.id,
+                    index
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (audioBlob) {
+            setSuc(false);
+            setLoading(null);
+            sendAudio();
+        }
+    }, [audioBlob,]);
+
     return (
         <div>
             <div className='border-[2px] p-[20px] mt-[20px]'>
-                <h2 className='font-bold text-[30px]'>Part 1.1</h2>
+                <h2 className='font-bold text-[30px]'>Part 1.{index + 1}</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
-                3. How often do you watch TV programmes about history now ?
+                    {data?.question}
                 </p>
-                {/* Loading Indicator */}
                 {loading ? (
                     <div className='flex items-center justify-center'>
                         <ReactLoading type="spinningBubbles" color="#000" height={50} width={50} />
                     </div>
                 ) : (
                     <div className='w-[150px] mx-auto'>
-                        {!suc  && (
+                        {!suc && (
                             <button
                                 onClick={isRecording ? stopRecording : startRecording}
                                 className={`bg-blue-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 ${isRecording ? 'bg-red-600' : 'bg-green-600'}`}>
                                 {isRecording ? 'Stop Recording' : 'Start Recording'}
                             </button>
                         )}
-                        {/* Timer Display */}
                         {isRecording && (
                             <div className='mt-[10px] text-center'>
                                 <p className='font-bold text-[20px]'>Time Left: {timeLeft}s</p>
                             </div>
                         )}
-                        {/* Volume Indicator */}
                         {isRecording && (
                             <div className='mt-[10px] flex items-center'>
-                            <div className='w-full h-[5px] bg-gray-300 overflow-hidden flex flex flex-row-reverse'>
-                                <div
-                                    className='h-full bg-green-500'
-                                    style={{ width: `${volume * 100}%` }}
-                                ></div>
+                                <div className='w-full h-[5px] bg-gray-300 overflow-hidden flex'>
+                                    <div
+                                        className='h-full bg-green-500'
+                                        style={{ width: `${volume * 100}%` }}
+                                    ></div>
+                                </div>
                             </div>
-                            <div className='w-full h-[5px] bg-gray-300 overflow-hidden flex'>
-                                <div
-                                    className='h-full bg-green-500'
-                                    style={{ width: `${volume * 100}%` }}
-                                ></div>
-                            </div>
-                        </div>
                         )}
                     </div>
                 )}
                 {suc !== null && !loading && (
                     <div className='mx-auto w-[500px] text-center'>
                         {suc ? (
-                            <h1>
-                                Audio submitted successfully! 
-                            </h1>
+                            <h1>Audio submitted successfully!</h1>
                         ) : (
                             <div>
                                 <h1>Submission failed. Please try again.</h1>
@@ -183,4 +220,4 @@ function Speaking3() {
     );
 }
 
-export default Speaking3;
+export default SpeakingCard;

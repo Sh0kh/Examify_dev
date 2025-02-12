@@ -19,7 +19,7 @@ export default function Part3({ data, onAnswerSelect, selectedAnswers }) {
                         <select
                             className="border w-[200px] border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onChange={(e) => handleSelectChange(i.id, e)}
-                            value={selectedAnswers[i.id] || ""} // Запоминает выбранный ответ
+                            value={selectedAnswers[i.id] || ""}
                         >
                             <option value="" disabled>
                                 Select

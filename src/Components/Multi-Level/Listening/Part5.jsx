@@ -1,7 +1,4 @@
 export default function Part5({ data, onAnswerSelect, selectedAnswers }) {
-
-    console.log(data)
-
     return (
         <div className="p-4  space-y-8 pb-[100px]">
             <div>

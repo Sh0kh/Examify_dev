@@ -15,8 +15,6 @@ function Exam() {
   const location = useLocation();
 
   useEffect(() => {
-    // If remainSection is defined, set it as the current component
-    // Otherwise, default to 'LISTENING'
     const initialComponent = remainSection || 'LISTENING';
     dispatch(setComponent(initialComponent));
   }, [dispatch, remainSection]);
@@ -30,7 +28,7 @@ function Exam() {
     const handleRouteChange = (event) => {
       const confirmLeave = window.confirm("Are you sure you want to leave this page?");
       if (!confirmLeave) {
-        navigate(location.pathname); // Use the location from the hook
+        navigate(location.pathname);
       }
     };
 
@@ -51,7 +49,7 @@ function Exam() {
 
   return (
     <div className='Book_1'>
-      {currentComponent === 'LISTENING' && <Listening />}
+      {currentComponent === 'LISTENING' && <Listening  />}
       {currentComponent === 'READING' && <Reading />}
       {currentComponent === 'SPEAKING' && <Speaking />}
       {currentComponent === 'WRITING' && <Writing />}

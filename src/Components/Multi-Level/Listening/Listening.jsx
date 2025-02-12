@@ -10,6 +10,7 @@ import { axiosAPI2 } from '../../../Service/axios';
 import MultiLevelStartModal from '../MultiLevelStartModal.jsx'
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
+import { setNextSection } from '../../../Redux/NextSection.js';
 
 
 function Listening() {
@@ -21,7 +22,7 @@ function Listening() {
     const [Part1Answer, setPart1Answer] = useState([]);
     const [Part2Answer, setPart2Answer] = useState([]);
     const [Part3Answer, setPart3Answer] = useState([]);
-    const [Part4Answer, setPart4Answer] = useState([])
+    const [Part4Answer, setPart4Answer] = useState([]);
     const [Part5Answer, setPart5Answer] = useState([])
     const [Part6Answer, setPart6Answer] = useState([])
     const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -101,59 +102,52 @@ function Listening() {
     };
 
 
-
-
-
     const checkPart = async () => {
         try {
             const payload = {
                 section_id: examData?.section?.id,
-                exam_id: examData?.section?.exam_id,
+                exam_id: examData?.exam?.id,
                 parts: [
                     {
                         id: examData?.section?.parts[0]?.id,
-                        part_type: "Test shaklida",
+                        part_type: "listening",
                         answers: Part1Answer
                     },
                     {
                         id: examData?.section?.parts[1]?.id,
-                        part_type: "Matn yozish shaklida",
+                        part_type: "listening",
                         answers: Part2Answer
                     },
                     {
                         id: examData?.section?.parts[2]?.id,
-                        part_type: "Nima haqda gapirganini tanlash shaklida",
+                        part_type: "listening",
                         answers: Part3Answer
                     },
                     {
                         id: examData?.section?.parts[3]?.id,
-                        part_type: "Xarita shaklida",
+                        part_type: "listening",
                         answers: Part4Answer
                     },
                     {
                         id: examData?.section?.parts[4]?.id,
-                        part_type: "Test shaklida",
+                        part_type: "listening",
                         answers: Part5Answer
                     },
                     {
                         id: examData?.section?.parts[5]?.id,
-                        part_type: "Savollarga javob shaklida",
+                        part_type: "listening",
                         answers: Part6Answer
                     },
                 ],
             };
-
-            console.log("Отправляем на сервер:", payload);
-
-            await axiosAPI2.post(`/user/check`, payload, {
+            const response = await axiosAPI2.post(`/user/check`, payload, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json",
                 },
             });
+            dispatch(setNextSection(response.data));
             dispatch(setComponent('READING'));
-
-
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
         }
