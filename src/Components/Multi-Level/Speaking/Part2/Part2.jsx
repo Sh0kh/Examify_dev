@@ -1,14 +1,25 @@
 import React from 'react'
+import CONFIG from '../../../../Service/Config2'
+import SpeakingCard from '../SpeakingCard'
 
 
-function Part2() {
+function Part2({ data, onResponse }) {
+
+    console.log(data)
+
     return (
         <div className='Container'>
             <div className='pb-[50px]'>
                 <div className='flex items-center mt-[20px] justify-center gap-[20px] flex-wrap'>
-                    <img className='w-[300px]' src="https://images.squarespace-cdn.com/content/v1/618e7f223fb749481d23c9c1/8ad0b113-c63a-4db9-809a-4c3eb51122ba/foto+logo.jpg" alt="" />
+                    <img className='w-[300px]' src={CONFIG.API_URL + data?.photo_path} alt="foto" />
                 </div>
-
+                {data?.questions?.map((i, index) => (
+                    <SpeakingCard
+                        data={i}
+                        index={index}
+                        onResponse={onResponse}
+                    />
+                ))}
             </div>
         </div>
     )

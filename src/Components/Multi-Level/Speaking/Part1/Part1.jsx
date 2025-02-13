@@ -1,5 +1,5 @@
 import React from 'react'
-import SpeakingCard from './SpeakingCard'
+import SpeakingCard from '../SpeakingCard'
 import CONFIG from '../../../../Service/Config2'
 
 function Part1({ data, onResponse, onRespons2 }) {
