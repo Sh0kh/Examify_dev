@@ -19,9 +19,8 @@ function Writing() {
     const [active, setActive] = useState(1);
     const dispatch = useDispatch();
     const [timeLeft, setTimeLeft] = useState(null);
-    const [Part1Answer, setPart1Answer] = useState([]);
-    // const [Part2Answer, setPart2Answer] = useState([]);
     const [part1Text, setPart1Text] = useState('');
+    const [part2Text, setPart2Text] = useState('');
 
 
 
@@ -60,40 +59,29 @@ function Writing() {
     console.log(NextSection?.next_section)
 
 
-    const handleAnswerSelect = (question_id, answer_id, value = null, partType) => {
-        if (partType === "part2") {
-            setPart1Answer(prev => {
-                const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
-            });
-        }
-    }
-
-
-
-    const handleTextChange = (text) => {
-        setPart1Text(text);
-    };
-
     const out = () => {
         navigate(-1);
         setTimeout(() => {
             window.location.reload();
         }, 1000);
     };
-
     const parts = [
         {
             id: 1,
             component: <Part1
                 data={NextSection?.next_section?.parts[0]}
-                onTextChange={handleTextChange}
+                onTextChange={setPart1Text}
+                value={part1Text} 
             />
         },
-        { id: 2, component: <Part2 /> },
+        {
+            id: 2, component: <Part2
+                data={NextSection?.next_section?.parts[1]}
+                onTextChange={setPart2Text}
+                value={part2Text}
+            />
+        },
     ];
-
-
     const checkPart = async () => {
         try {
             const payload = {
@@ -102,17 +90,36 @@ function Writing() {
                 parts: [
                     {
                         id: NextSection?.next_section?.parts[0]?.id,
-                        part_type: "reading",
-                        answers: Part1Answer
+                        part_type: "writing",
+                        answers: [
+                            {
+                                question_id: NextSection?.next_section?.parts[0]?.questions[0]?.id,
+                                answer_text: part1Text,
+                                question_type: "essay"
+                            }
+                        ]
+                    },
+                    {
+                        id: NextSection?.next_section?.parts[1]?.id,
+                        part_type: "writing",
+                        answers: [
+                            {
+                                question_id: NextSection?.next_section?.parts[0]?.questions[0]?.id,
+                                answer_text: part2Text,
+                                question_type: "essay"
+                            }
+                        ]
                     },
                 ],
             };
+
             const response = await axiosAPI2.post(`/user/check`, payload, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json",
                 },
             });
+
             dispatch(setNextSection(response.data));
             dispatch(setComponent('SPEAKING'));
         } catch (error) {
