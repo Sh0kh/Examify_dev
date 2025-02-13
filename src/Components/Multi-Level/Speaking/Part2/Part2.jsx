@@ -5,7 +5,6 @@ import SpeakingCard from '../SpeakingCard'
 
 function Part2({ data, onResponse }) {
 
-    console.log(data)
 
     return (
         <div className='Container'>

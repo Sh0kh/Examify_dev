@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
+import DOMPurify from 'dompurify';
+import { axiosAPI2 } from '../../../../Service/axios';
 
-function Speaking1() {
+
+function Speaking1({ data, onResponse }) {
+
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
     const [timeLeft, setTimeLeft] = useState(30);
@@ -14,11 +18,6 @@ function Speaking1() {
     const analyserRef = useRef(null);
     const microphoneRef = useRef(null);
     const processorRef = useRef(null);
-
-    if(audioBlob){
-        setSuc(false)
-        setLoading(null)
-    }
 
     useEffect(() => {
         return () => {
@@ -91,7 +90,7 @@ function Speaking1() {
             console.error('Error accessing microphone', error);
         }
     };
-    
+
 
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
@@ -120,30 +119,80 @@ function Speaking1() {
     };
 
 
+    const sendAudio = async () => {
+        if (!audioBlob) return;
+        try {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.ogg');
+            formData.append('questionId', data.id); // Предполагаем, что data содержит id вопроса
+
+            const response = await axiosAPI2.post('/user/upload-speaking', formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            setSuc(true);
+            if (onResponse) {
+                onResponse({
+                    file_path: response.data?.audio_path,
+                    question_id: data.questions[0]?.id,
+                    question_type: 'speaking'
+                });
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            setSuc(false);
+            if (onResponse) {
+                onResponse({
+                    status: 'error',
+                    error: error,
+                    questionId: data.id,
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (audioBlob) {
+            setSuc(false);
+            setLoading(null);
+            sendAudio();
+        }
+    }, [audioBlob,]);
+
 
     return (
         <div>
             <div className='border-[2px] p-[20px] mt-[20px]'>
                 <h2 className='font-bold text-[30px]'>Part 3</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
-                    What did you study in history lessons when you were at school?
+                    {data?.questions[0]?.question}
                 </p>
                 <div className='flex items-center gap-[10px] my-[10px] justify-between'>
-                    <div className='border-[2px] p-[10px] border-[black] rounded-[10px]'>
+                    <div className='border-[2px] w-[100%] p-[10px] border-[black] rounded-[10px]'>
                         <h2>
                             For:
                         </h2>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates distinctio illo reiciendis vero suscipit id facilis recusandae incidunt corporis rem. Obcaecati accusantium et voluptate tempora, maiores doloremque minus. Nostrum, obcaecati.
-                        </p>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(data?.description)
+                            }}
+                        />
                     </div>
-                    <div className='border-[2px] p-[10px] border-[black] rounded-[10px]'>
+                    <div className='border-[2px] w-[100%] p-[10px] border-[black] rounded-[10px]'>
                         <h2>
                             Against:
                         </h2>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates distinctio illo reiciendis vero suscipit id facilis recusandae incidunt corporis rem. Obcaecati accusantium et voluptate tempora, maiores doloremque minus. Nostrum, obcaecati.
-                        </p>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(data?.right_text)
+                            }}
+                        />
                     </div>
                 </div>
                 {loading ? (

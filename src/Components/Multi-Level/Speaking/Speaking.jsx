@@ -14,6 +14,7 @@ function Speaking() {
     const [part1Answer, setPart1Answer] = useState([]);
     const [part2Answer, setPart2Answer] = useState([]);
     const [part3Answer, setPart3Answer] = useState([]);
+    const [part4Answer, setPart4Answer] = useState([]);
 
     const nextSection = useSelector((state) => state.exam.NextSection);
 
@@ -75,7 +76,14 @@ function Speaking() {
                 }}
             />
         },
-        { id: 3, component: <Part3 /> }
+        {
+            id: 3, component: <Part3
+                data={nextSection?.next_section?.parts[3]}
+                onResponse={(response) => {
+                    setPart4Answer((prev) => [...prev, response]);
+                }}
+            />
+        }
     ];
 
     const checkPart = async () => {
@@ -98,6 +106,11 @@ function Speaking() {
                         id: nextSection?.next_section?.parts[2]?.id,
                         part_type: "speaking",
                         answers: part3Answer
+                    },
+                    {
+                        id: nextSection?.next_section?.parts[3]?.id,
+                        part_type: "speaking",
+                        answers: part4Answer
                     }
                 ]
             };
