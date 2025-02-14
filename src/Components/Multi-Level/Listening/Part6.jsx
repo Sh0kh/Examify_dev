@@ -38,7 +38,6 @@ export default function Part2({ data, onAnswerSelect }) {
     }, [data, onAnswerSelect]);
 
 
-
     return (
         <div className="p-4 mx-auto space-y-8 pb-[100px]">
             <div>

@@ -57,39 +57,41 @@ function Reading() {
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
-    
-    const handleAnswerSelect = (question_id, answer_id, value = null, partType) => {
+
+    const handleAnswerSelect = (question_id, answer_id, value = null, partType, question_type = "quiz") => {
         setSelectedAnswers(prev => ({ ...prev, [question_id]: answer_id || value }));
 
         if (partType === "part1") {
             setPart1Answer(value);
-        }
-        else if (partType === "part2") {
+        } else if (partType === "part2") {
             setPart2Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
             });
-        }
-        else if (partType === "part3") {
+        } else if (partType === "part3") {
             setPart3Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
             });
-        }
-        else if (partType === "part4") {
+        } else if (partType === "part4") {
             setPart4Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
             });
-        }
-        else if (partType === "part5") {
+        } else if (partType === "part5") {
             setPart5Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
-            })
-        };
-    }
-    
+                if (question_type === "quiz") {
+                    return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
+                } else if (question_type === "writing") {
+                    return [...updatedAnswers, { question_id, answer_text: value, question_type: "writing", answer_id: null }];
+                }
+                return updatedAnswers;
+            });
+        }
+    };
+
+
     const out = () => {
         navigate(-1);
         setTimeout(() => {
@@ -180,9 +182,10 @@ function Reading() {
             id: 5,
             component: <Part5
                 selectedAnswers={selectedAnswers}
-                onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "part5")}
+                onAnswerSelect={(q, a, v, type) => handleAnswerSelect(q, a, v, "part5", type)}
                 data={NextSection?.next_section?.parts[4]}
             />
+
         },
     ];
 

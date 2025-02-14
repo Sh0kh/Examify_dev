@@ -1,56 +1,57 @@
 import { useEffect } from "react";
-import DOMPurify from "dompurify";
 
-export default function Part2({ data, onAnswerSelect }) {
-    // Генерируем инпуты для каждого вопроса
-    const processedHtml = data?.questions
-        ?.map((question, qIndex) => {
-            let inputIndex = 0;
-            return question.question.replace(/\{inputext\}/g, () => {
-                const answerId = `${question.id}-${inputIndex}`; // Уникальный answer_id
-                inputIndex++;
-                return `<input type="text"
-                    class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
-                    data-question-id="${question.id}"
-                    data-answer-id="${answerId}"
-                />`;
-            });
-        })
-        .join("");
+export default function Part2({ data, onAnswerSelect, selectedAnswers }) {
+    const processContent = (question) => {
+        const parts = question.question.split(/\{inputext\}/g);
+        const elements = [];
 
-    useEffect(() => {
-        const inputs = document.querySelectorAll(".part2-input");
+        parts.forEach((part, index) => {
+            elements.push(<span className="inline" key={`text-${index}`} dangerouslySetInnerHTML={{ __html: part }} />);
 
-        const updateAnswers = () => {
-            const updatedAnswers = Array.from(inputs).map(input => ({
-                question_id: input.dataset.questionId,
-                answer_id: input.dataset.answerId, // Теперь у каждого ответа свой ID
-                question_type: "writing",
-                answer_text: input.value
-            }));
+            if (index !== parts.length - 1) {
+                const answerId = `${question.id}-${index}`;
+                const answer = selectedAnswers.find(a =>
+                    a.question_id == question.id &&
+                    a.answer_id === answerId
+                ) || { answer_text: "" };
+                elements.push(
+                    <input
+                        key={`input-${question.id}-${index}`}
+                        type="text"
+                        className="border-b-[black] border-b-[2px] inline outline-none px-2 py-1 rounded part2-input"
+                        value={answer.answer_text}
+                        onChange={(e) => handleInputChange(question.id, answerId, e.target.value)}
+                    />
+                );
+            }
+        }); 
+        return elements;
+    };
 
-            onAnswerSelect(null, null, updatedAnswers);
-        };
+    const handleInputChange = (questionId, answerId, value) => {
+        const newAnswers = selectedAnswers
+            .filter(a => !(a.question_id == questionId && a.answer_id === answerId))
+            .concat({
+                question_id: questionId,
+                answer_id: answerId,
+                answer_text: value,
+                question_type: "writing"
+            })
+            .filter(a => a.answer_text.trim() !== "");
 
-        inputs.forEach(input => input.addEventListener("input", updateAnswers));
-        return () => {
-            inputs.forEach(input => input.removeEventListener("input", updateAnswers));
-        };
-    }, [data, onAnswerSelect]);
+        onAnswerSelect(null, null, newAnswers);
+    };
 
     return (
         <div className="p-4 mx-auto space-y-8 pb-[100px]">
             <div>
                 <p className="text-lg font-semibold">{data?.description}</p>
             </div>
-            {processedHtml && (
-                <div
-                    className="space-y-6"
-                    dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(processedHtml)
-                    }}
-                />
-            )}
+            {data?.questions?.map((question) => (
+                <div key={question.id} className="space-y-6">
+                    {processContent(question)}
+                </div>
+            ))}
         </div>
     );
 }

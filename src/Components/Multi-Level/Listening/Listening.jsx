@@ -165,6 +165,7 @@ function Listening() {
             id: 2, component: <Part2
                 data={examData?.section?.parts[1]}
                 onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "writing")}
+                selectedAnswers={Part2Answer}
             />
         },
         {
