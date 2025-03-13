@@ -24,6 +24,7 @@ function Reading() {
     const [Part4Answer, setPart4Answer] = useState([]);
     const [Part5Answer, setPart5Answer] = useState([]);
     const [timeLeft, setTimeLeft] = useState(null);
+    const [loading, setLoading] = useState(false)
 
     const [selectedAnswers, setSelectedAnswers] = useState({});
 
@@ -100,6 +101,7 @@ function Reading() {
     };
 
     const checkPart = async () => {
+        setLoading(true)
         try {
             const payload = {
                 section_id: NextSection?.next_section?.id,
@@ -142,6 +144,8 @@ function Reading() {
             dispatch(setComponent('WRITING'));
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -207,10 +211,14 @@ function Reading() {
                         </button>
                         <button
                             onClick={checkPart}
-                            className='bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-green-500 hover:bg-transparent hover:text-green-500'
+                            disabled={loading}
+                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+    `}
                         >
-                            Next exam
+                            {loading ? "Loading..." : "Next Exam"}
                         </button>
+
                     </div>
                 </div>
             </div>

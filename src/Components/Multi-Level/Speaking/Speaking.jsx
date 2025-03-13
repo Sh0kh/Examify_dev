@@ -15,6 +15,7 @@ function Speaking() {
     const [part2Answer, setPart2Answer] = useState([]);
     const [part3Answer, setPart3Answer] = useState([]);
     const [part4Answer, setPart4Answer] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     const nextSection = useSelector((state) => state.exam.NextSection);
 
@@ -87,6 +88,7 @@ function Speaking() {
     ];
 
     const checkPart = async () => {
+        setLoading(true)
         try {
             const payload = {
                 section_id: nextSection?.next_section?.id,
@@ -123,6 +125,8 @@ function Speaking() {
             });
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
+        }finally{
+            setLoading(false)
         }
     };
 
@@ -141,9 +145,12 @@ function Speaking() {
                         </button>
                         <button
                             onClick={checkPart}
-                            className="bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-green-500 hover:bg-transparent hover:text-green-500"
+                            disabled={loading}
+                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+    `}
                         >
-                            Next exam
+                            {loading ? "Loading..." : "Finish Exam"}
                         </button>
                     </div>
                 </div>

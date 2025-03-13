@@ -21,6 +21,7 @@ function Writing() {
     const [timeLeft, setTimeLeft] = useState(null);
     const [part1Text, setPart1Text] = useState('');
     const [part2Text, setPart2Text] = useState('');
+    const [loading, setLoading] = useState(false)
 
 
 
@@ -71,7 +72,7 @@ function Writing() {
             component: <Part1
                 data={NextSection?.next_section?.parts[0]}
                 onTextChange={setPart1Text}
-                value={part1Text} 
+                value={part1Text}
             />
         },
         {
@@ -83,6 +84,7 @@ function Writing() {
         },
     ];
     const checkPart = async () => {
+        setLoading(true)
         try {
             const payload = {
                 section_id: NextSection?.next_section?.id,
@@ -124,6 +126,8 @@ function Writing() {
             dispatch(setComponent('SPEAKING'));
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -141,9 +145,12 @@ function Writing() {
                         </button>
                         <button
                             onClick={checkPart}
-                            className='bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-green-500 hover:bg-transparent hover:text-green-500'
+                            disabled={loading}
+                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+    `}
                         >
-                            Next exam
+                            {loading ? "Loading..." : "Next Exam"}
                         </button>
                     </div>
                 </div>

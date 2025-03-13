@@ -8,7 +8,7 @@ function Speaking1({ data, onResponse }) {
 
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(120);
     const [volume, setVolume] = useState(0);
     const [suc, setSuc] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ function Speaking1({ data, onResponse }) {
 
             recorder.start();
             setIsRecording(true);
-            setTimeLeft(30); // Reset the timer
+            setTimeLeft(120); // Reset the timer
 
             timerRef.current = setInterval(() => {
                 setTimeLeft((prevTime) => {

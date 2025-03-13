@@ -25,6 +25,7 @@ function Listening() {
     const [Part4Answer, setPart4Answer] = useState([]);
     const [Part5Answer, setPart5Answer] = useState([])
     const [Part6Answer, setPart6Answer] = useState([])
+    const [loading, setLoading] = useState(false)
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const dispatch = useDispatch();
 
@@ -103,6 +104,7 @@ function Listening() {
 
 
     const checkPart = async () => {
+        setLoading(true)
         try {
             const payload = {
                 section_id: examData?.section?.id,
@@ -150,6 +152,8 @@ function Listening() {
             dispatch(setComponent('READING'));
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -211,9 +215,12 @@ function Listening() {
                         </button>
                         <button
                             onClick={checkPart}
-                            className='bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-green-500 hover:bg-transparent hover:text-green-500'
+                            disabled={loading}
+                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+    `}
                         >
-                            Next exam
+                            {loading ? "Loading..." : "Next Exam"}
                         </button>
                     </div>
                 </div>

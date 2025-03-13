@@ -1,4 +1,4 @@
-import axios, { axiosAPI1 } from '../../Service/axios';
+import { axiosAPI1 } from '../../Service/axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,7 +31,7 @@ function TestModal({ isOpen, onClose, id }) {
         } catch (error) {
             showErrorToast(error?.response?.data?.message || 'Error!');
             console.log(error);
-            if(error.response?.status === 401){
+            if (error.response?.status === 401) {
                 navigate('/login')
             }
         }

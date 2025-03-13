@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import { axiosAPI2 } from '../../../Service/axios';
 
-function SpeakingCard({ data, index, onResponse }) {
+function SpeakingCard({ data, index, onResponse, time }) {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(time);
     const [volume, setVolume] = useState(0);
     const [suc, setSuc] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -15,9 +15,6 @@ function SpeakingCard({ data, index, onResponse }) {
     const analyserRef = useRef(null);
     const microphoneRef = useRef(null);
     const processorRef = useRef(null);
-
-
-
 
     useEffect(() => {
         return () => {
@@ -43,7 +40,7 @@ function SpeakingCard({ data, index, onResponse }) {
 
             recorder.start();
             setIsRecording(true);
-            setTimeLeft(30); // Reset the timer
+            setTimeLeft(time); // Reset the timer
 
             timerRef.current = setInterval(() => {
                 setTimeLeft((prevTime) => {
@@ -140,7 +137,8 @@ function SpeakingCard({ data, index, onResponse }) {
                 onResponse({
                     file_path: response.data?.audio_path,
                     question_id: data.id,
-                    question_type: 'speaking'
+                    question_type: 'speaking',
+                    answer_text: response?.data?.transcription || ""
                 });
             }
         } catch (error) {
@@ -170,7 +168,7 @@ function SpeakingCard({ data, index, onResponse }) {
     return (
         <div>
             <div className='border-[2px] p-[20px] mt-[20px]'>
-                <h2 className='font-bold text-[30px]'>Part 1.{index + 1}</h2>
+                <h2 className='font-bold text-[30px]'>Question {index + 1}</h2>
                 <p className='font-bold text-[20px] mb-[15px]'>
                     {data?.question}
                 </p>

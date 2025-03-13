@@ -12,6 +12,7 @@ function Part1({ data, onResponse, onRespons2 }) {
                 </h1>
                 {data[0]?.questions?.map((i, index) => (
                     <SpeakingCard
+                        time={30}
                         data={i}
                         index={index}
                         onResponse={onResponse}
@@ -24,6 +25,7 @@ function Part1({ data, onResponse, onRespons2 }) {
                 </div>
                 {data[1]?.questions?.map((i, index) => (
                     <SpeakingCard
+                        time={30}
                         data={i}
                         index={index}
                         onResponse={onRespons2}

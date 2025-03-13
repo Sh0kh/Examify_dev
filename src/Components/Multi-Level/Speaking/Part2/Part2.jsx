@@ -14,6 +14,7 @@ function Part2({ data, onResponse }) {
                 </div>
                 {data?.questions?.map((i, index) => (
                     <SpeakingCard
+                        time={120}
                         data={i}
                         index={index}
                         onResponse={onResponse}

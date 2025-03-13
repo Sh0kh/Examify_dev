@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo from '../../images/logo examfiy. asl.png';
-import { NavLink, useLocation } from 'react-router-dom';
+import logo from '../../images/examifyNew.png';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import HeaderMenu from './HeaderMenu';
 import { Spin as Hamburger } from 'hamburger-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,18 +49,18 @@ function Header() {
 
 
   const openManualModal = () => {
-    setManualModal(true); 
+    setManualModal(true);
   };
 
   const closeManualModal = () => {
-    setManualModal(false); 
+    setManualModal(false);
   };
 
 
 
   return (
-    <div>
-      <header className='Header fixed w-full bg-white z-50 py-[15px] border-b-[1px] border-b-MainColor'>
+    <div className='container'>
+      <header className="flex items-center justify-between px-6 py-3 bg-white rounded-xl shadow-md">
         {location.pathname === '/test' && (
           <div className='top-0 w-[full] p-[5px] bg-[red] recom hidden d'>
             <h1 className='text-center text-[white]'>
@@ -70,42 +70,41 @@ function Header() {
         )}
         <div className='Container'>
           <div className='header__wrapper flex items-center justify-between'>
-            <NavLink onClick={handleScrollUp} to={`/`}>
-              <div>
-                <img className='w-[150px] object-cover cursor-pointer' src={logo} alt="" />
-              </div>
-            </NavLink>
-            <nav className='flex items-center gap-[50px]'>
-              <NavLink onClick={handleScrollUp} to={`/`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
-                Home
+            <div className='flex items-center gap-[30px]'>
+              <NavLink onClick={handleScrollUp} to={`/`}>
+                <div className="flex items-center gap-2">
+                  <img src={logo} alt="Logo" className="w-[121px] h-[34px]" />
+                </div>
               </NavLink>
-              <NavLink onClick={handleScrollUp} to={`/multi-level`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
-                Multi level
-              </NavLink>
-              <NavLink onClick={handleScrollUp} to={`/test`} className="font-bold  text-[20px] transition-all duration-500 hover:tracking-[8px]">
-                Take exam
-              </NavLink>
-              {token && (
-                <NavLink onClick={handleScrollUp} to={`/myResult`} className="font-bold  text-[20px] transition-all duration-500 hover:tracking-[10px]">
-                  My Result
+              <nav className='flex items-center gap-[20px] text-[#535862] '>
+                <NavLink onClick={handleScrollUp} to={`/test`} className="hover:text-black font-[600] ">
+                  EILTS
                 </NavLink>
-              )}
-              <NavLink onClick={handleScrollUp} to={`/contact`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
-                Contact
-              </NavLink>
-              <NavLink onClick={handleScrollUp} to={`/bonus`} className="font-bold text-[20px] transition-all duration-500 hover:tracking-widest">
-                Bonus
-              </NavLink>
-              <button
-                onClick={openManualModal} // Открытие модала
-                className='font-bold text-[20px] transition-all duration-500 hover:tracking-widest'>
-                Manual
-              </button>
-            </nav>
+                <NavLink onClick={handleScrollUp} to={`/multi-level`} className="hover:text-black font-[600]">
+                  CEFR
+                </NavLink>
+                {token && (
+                  <NavLink onClick={handleScrollUp} to={`/myResult`} className="hover:text-black font-[600]">
+                    My Result
+                  </NavLink>
+                )}
+                <NavLink onClick={handleScrollUp} to={`/contact`} className="hover:text-black font-[600]">
+                  Contact
+                </NavLink>
+                <NavLink onClick={handleScrollUp} to={`/bonus`} className="hover:text-black font-[600] ">
+                  Bonus
+                </NavLink>
+                <button
+                  onClick={openManualModal} // Открытие модала
+                  className="hover:text-black font-[600]">
+                  Manual
+                </button>
+                <a className='hover:text-black font-[600]' href="https://itliveacademy.uz/" target="_blank" rel="noopener noreferrer">
+                  IT LIVE Academy
+                </a>
+              </nav>
+            </div>
             <div className='flex items-center gap-[5px] relative'>
-              <a href="https://itliveacademy.uz/" target="_blank" rel="noopener noreferrer" className='header__login__btn flex items-center gap-[5px] font-bold text-[20px] text-MainColor border-[3px] border-MainColor px-[25px] py-[5px] transition-colors duration-[0.6s] rounded-[8px] bg-transparent hover:bg-MainColor hover:text-[white]'>
-                IT LIVE ACADEMY
-              </a>
               {token ? (
                 <button className='header__login__btn' onClick={ActiveModal}>
                   <svg className='text-[30px] text-MainColor' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -114,11 +113,10 @@ function Header() {
                 </button>
               ) : (
                 <NavLink onClick={handleScrollUp} to='/login'>
-                  <button className='header__login__btn flex items-center gap-[5px] font-bold text-[20px] text-[white] border-[3px] border-MainColor px-[25px] py-[5px] transition-colors duration-[0.6s] rounded-[8px] bg-MainColor hover:bg-transparent hover:text-MainColor'>
+                  <button
+                    className="px-4 py-2 text-white bg-[#2970ff] font-[600] normal-case rounded-md"
+                  >
                     Login
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9m6-9l-4-4m4 4l-4 4m4-4H5"></path>
-                    </svg>
                   </button>
                 </NavLink>
 
@@ -151,7 +149,7 @@ function Header() {
           </div>
         </div>
         <HeaderMenu isOpen={active} onClose={closeMenu} />
-        <ManualModal isOpen={manualModal} onClose={closeManualModal}/>
+        <ManualModal isOpen={manualModal} onClose={closeManualModal} />
       </header>
 
     </div>
