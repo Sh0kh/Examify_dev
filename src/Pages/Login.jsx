@@ -175,11 +175,14 @@ function Login() {
     return (
         <div className="Login w-full h-screen flex items-center justify-center bg-white relative">
             <div className="Login__wrapper text-center bg-white rounded-lg shadow-lg p-10">
-                <h1 className="font-bold text-3xl text-gray-800 mb-4">Kodni kiriting</h1>
-                <p className="text-lg text-gray-600 mb-6">
-                    <a className="text-blue-500 border-b-2 border-blue-500" href="https://t.me/codevanbot" target="_blank" rel="noopener noreferrer">
+                <h1 className="font-bold text-3xl text-gray-800 mb-4">Login</h1>
+                <p className="text-lg text-gray-600 mb-6 max-w-[470px]">
+                    You'll need to go to the {''}
+                    <a className="text-blue-500  border-blue-500" href="https://t.me/codevanbot" target="_blank" rel="noopener noreferrer">
                         ExamifyCode
-                    </a> yordamida kodingizni oling
+                    </a> {''}
+                    Telegram bot to get a verification code
+
                 </p>
 
                 <form className="flex items-center justify-center gap-2 mb-6">
@@ -192,7 +195,8 @@ function Login() {
                             onPaste={(e) => handlePaste(e, index)}
                             onKeyDown={(e) => handleKeyDown(e, index)}
                             type="text"
-                            className="py-2 text-center text-2xl border border-gray-300 rounded-lg w-12 transition duration-300 focus:outline-none focus:border-blue-500"
+                            placeholder='0'
+                            className="py-2 shadow-md text-center text-2xl border-[2px] border-gray-300 rounded-lg w-12 transition duration-300 focus:outline-none focus:border-blue-500"
                             pattern="[0-9]*"
                             maxLength="1"
                             inputMode="numeric"
@@ -224,7 +228,7 @@ function Login() {
                                         id='SurName'
                                         value={edit.surname}
                                         onChange={(e) => setEdit({ ...edit, surname: e.target.value })}
-                                        className='w-full px-3 py-2 rounded-lg bg-transparent border-2 border-gray-300 text-black focus:outline-none'
+                                        className='w-full  px-3 py-2 rounded-lg bg-transparent border-2 border-gray-300 text-black focus:outline-none'
                                         type="text"
                                         required
                                     />
@@ -234,8 +238,8 @@ function Login() {
                                         Edit
                                     </button>
                                     <span onClick={skip} className='text-blue-500 cursor-pointer hover:underline'>
-                        Skip
-                    </span>
+                                        Skip
+                                    </span>
                                 </div>
                             </form>
                         </div>

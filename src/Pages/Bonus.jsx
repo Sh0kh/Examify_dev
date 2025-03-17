@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import BonusTable from "../Components/Bonus/BonusTable";
+// import BonusTable from "../Components/Bonus/BonusTable";
 import UserBonus from "../Components/Bonus/UserBonus";
-import Footer from "../Components/Footer/Footer";
 import {axiosAPI1} from '../Service/axios'
 
 export default function Bonus(){
@@ -22,12 +21,10 @@ export default function Bonus(){
         getBonus()
     },[])
 
-    console.log(data)
     return(
-        <div className="pt-[100px]">
+        <div>
             <UserBonus data={data}/>
-            <BonusTable data={data?.more}/>
-            <Footer/>
+            {/* <BonusTable data={data?.more}/> */}
         </div>
     )
 }
