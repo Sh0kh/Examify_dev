@@ -12,7 +12,7 @@ export default function Part3({ data, onAnswerSelect, selectedAnswers }) {
             <div className="space-y-4 max-w-[700px]">
                 {data?.questions?.map((i, index) => (
                     <div key={index} className="flex items-center space-x-4">
-                        <span className="bg-MainColor text-[white] p-[5px] rounded-[5px]">
+                        <span className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
                             {15 + index}
                         </span>
                         <span className="text-md font-medium">Speaker... {index + 1}</span>

@@ -3,7 +3,7 @@ import { axiosAPI2 } from "../../Service/axios";
 import Swal from 'sweetalert2'
 import Check from '../../images/BuyCheck.png'
 
-export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
+export default function MultiLevelBuyModal({ isOpen, onClose, id, Error }) {
 
 
     const navigate = useNavigate()
@@ -34,6 +34,8 @@ export default function MultiLevelBuyModal({ isOpen, onClose, id }) {
                 showConfirmButton: false,
             });
         } catch (error) {
+            Error()
+            onClose()
             Swal.fire({
                 title: 'Error!',
                 text: error.response?.data?.message || 'Error.',

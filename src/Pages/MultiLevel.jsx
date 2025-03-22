@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { axiosAPI2 } from '../Service/axios';
 import { FaArrowRight } from "react-icons/fa";
 import ReactLoading from 'react-loading';
+import PaymentErrorModal from '../Components/Multi-Level/PaymentErrorModal';
 
 export default function MultiLevel() {
+    const [error, setError] = useState(false);
     const [start, setStart] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -80,7 +82,9 @@ export default function MultiLevel() {
                     )}
                 </div>
             </div>
-            <MultiLevelBuyModal id={ExamID} isOpen={start} onClose={() => setStart(false)} />
+            <MultiLevelBuyModal id={ExamID} isOpen={start} onClose={() => setStart(false)} Error={()=>setError(true)}/>
+            <PaymentErrorModal  isOpen={error} onClose={()=>setError(false)}/>
+
         </section>
     );
 }

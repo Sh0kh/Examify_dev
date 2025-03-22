@@ -55,15 +55,18 @@ export default function MultiLevelStartModal({ isOpen, onClose, setDataFromChild
                 }`}
         >
             <div
-                className={`TestModal p-[10px] bg-MainColor rounded-[8px] w-[40%] py-[30px] transform transition-all duration-500 ${isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-75 opacity-0 translate-y-10"
-                    }`}
+                className={`TestModal p-4 sm:p-6 bg-white rounded-[8px] w-[10   0%] sm:w-[50%] lg:w-[28%] transform transition-all duration-500 
+                    ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-10'}`}
+                onClick={(e) => e.stopPropagation()}
             >
-                <h2 className="text-center text-[white] text-[20px]">Are you ready to start the exam?</h2>
+                <h2 className=" text-[black] text-[20px]">Ready to submit tests?</h2>
+                <p className="text-[14px] text-[#535862] mt-[10px]">
+                    Please be aware that if you exit full screen mode or switch to another tab during the exam, you will be automatically terminated from the exam. Stay focused and make sure to keep your full attention on the exam to avoid any disruptions. Good luck! 📚🚫🚷
+                </p>
                 <div className="flex items-center justify-center gap-[30px] mt-[10px]">
                     <button
                         onClick={StartExam}
-                        className="bg-[white] p-[10px] rounded-[5px] px-[20px] border-[2px] transition duration-500 hover:bg-transparent hover:text-[white]"
-                    >
+                        className="mt-4 bg-blue-600 w-full text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
                         Start
                     </button>
                 </div>

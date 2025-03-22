@@ -5,7 +5,7 @@ function Part1({ data, onAnswerSelect }) {
     // console.log(data);
 
     const processedHtml = data?.questions
-        ?.map((question, ) => {
+        ?.map((question,) => {
             return question.question.replace(/\{inputext\}/g, () => {
                 return `<input type="text"
                     class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
@@ -36,13 +36,13 @@ function Part1({ data, onAnswerSelect }) {
     }, [data, onAnswerSelect]);
 
     return (
-        <div className='Readin__wrapper overflow-hidden flex gap-[20px] border-t-[2px] pt-[10px]'>
-            <div className='overflow-y-scroll h-screen w-[50%] px-[15px] pb-[150px]'>
+        <div className='Readin__wrapper overflow-hidden flex gap-[20px] pt-[10px] pb-[30px]'>
+            <div className='overflow-y-scroll h-screen w-[50%] px-[15px] pb-[150px] bg-[white] rounded-[15px] border-[1px]'>
                 <strong className='my-[15px] text-[20px] block'>Part 1</strong>
                 <strong className='my-[15px] block'>{data?.description}</strong>
             </div>
-            <div className='ReadingLine w-full bg-MainColor h-[5px] my-[10px] hidden'></div>
-            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%]'>
+            <div className='ReadingLine w-full bg-[black] h-[5px] my-[10px] hidden'></div>
+            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%] bg-[white] p-[15px] rounded-[15px] border-[1px]'>
                 {processedHtml && (
                     <div
                         className="space-y-6"

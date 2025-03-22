@@ -58,39 +58,46 @@ function Reading() {
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
-
     const handleAnswerSelect = (question_id, answer_id, value = null, partType, question_type = "quiz") => {
         setSelectedAnswers(prev => ({ ...prev, [question_id]: answer_id || value }));
 
+        const answerObj = {
+            question_id,
+            answer_id,
+            question_type,
+            answer_text: value || ""
+        };
+
         if (partType === "part1") {
-            setPart1Answer(value);
+            setPart1Answer(value || "");
         } else if (partType === "part2") {
             setPart2Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
+                return [...updatedAnswers, { ...answerObj, question_type: "select" }];
             });
         } else if (partType === "part3") {
             setPart3Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
+                return [...updatedAnswers, { ...answerObj, question_type: "select" }];
             });
         } else if (partType === "part4") {
             setPart4Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
+                return [...updatedAnswers, { ...answerObj, question_type: "quiz" }];
             });
         } else if (partType === "part5") {
             setPart5Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 if (question_type === "quiz") {
-                    return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
+                    return [...updatedAnswers, { ...answerObj, question_type: "quiz" }];
                 } else if (question_type === "writing") {
-                    return [...updatedAnswers, { question_id, answer_text: value, question_type: "writing", answer_id: null }];
+                    return [...updatedAnswers, { question_id, answer_text: value || "", question_type: "writing", answer_id: null }];
                 }
                 return updatedAnswers;
             });
         }
     };
+
 
 
     const out = () => {
@@ -200,45 +207,43 @@ function Reading() {
 
 
     return (
-        <div className='Reading'>
-            <div className='Book__header p-[10px] bg-[#b4b0b08c]'>
-                <div className='flex items-center justify-between'>
-                    <h2 className='text-[red]'>Reading exam</h2>
-                    <h2>{formatTime(timeLeft)}</h2>
-                    <div className='flex items-center gap-[10px]'>
-                        <button onClick={out} className='bg-[red] px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-[red] hover:bg-transparent hover:text-[red]'>
-                            Leave exam
-                        </button>
-                        <button
-                            onClick={checkPart}
-                            disabled={loading}
-                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
-        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+        <div className='Reading   min-h-screen'>
+            <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
+                <div className='Container'>
+                    <div className='flex items-center justify-between'>
+                        <h2 className='text-[black] text-[28px] font-bold'>Reading exam</h2>
+                        <h2>{formatTime(timeLeft)}</h2>
+                        <div className='flex items-center gap-[10px]'>
+                            <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
+                                Leave exam
+                            </button>
+                            <button
+                                onClick={checkPart}
+                                disabled={loading}
+                                className={`bg-[#2970FF] px-[50px] font-bold py-[7px] shadow-sm rounded-[8px] text-white transition duration-500 border-[2px] border-[#2970FF]
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-[#2970FF]"}
     `}
-                        >
-                            {loading ? "Loading..." : "Next Exam"}
-                        </button>
-
+                            >
+                                {loading ? "Loading..." : "Next Exam"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div className='p-[10px]'>
-                <div className='flex items-center gap-[3px] mt-[30px]'>
+                <div className='flex items-center  mt-[30px]'>
                     {parts.map(part => (
                         <button
                             key={part.id}
-                            onClick={() => {
-                                setActive(part.id);
-                            }}
-                            className={`border-[1px] border-[#D6D4D4] px-[10px] py-[7px] font-bold bg-[#ababab83] ${active === part.id ? 'bg-transparent' : ''}`}
+                            onClick={() => setActive(part.id)}
+                            className={`border-[1px] border-[#F5F5F5] px-[24px] py-[12px] font-bold  ${active === part.id ? 'bg-[#2970FF] text-[white]' : 'bg-[white]'}`}
                         >
-                            <span className='Part__words'>
-                                Part
-                            </span> {part.id}
+                            <span className='Part__words'>Part</span>{' '}
+                            {part.id}
                         </button>
                     ))}
                 </div>
-                <div>
+                <div className='mt-[30px]'>
                     {parts.find(part => part.id === active)?.component}
                 </div>
             </div>

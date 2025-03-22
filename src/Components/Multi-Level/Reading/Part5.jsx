@@ -29,8 +29,8 @@ function Part5({ data, selectedAnswers, onAnswerSelect, question_type }) {
     }, [data, onAnswerSelect]);
 
     return (
-        <div className='Readin__wrapper overflow-hidden flex gap-[20px] border-t-[2px] pt-[10px]'>
-            <div className='overflow-y-scroll h-screen  w-[50%] px-[15px] pb-[150px]'>
+        <div className='Readin__wrapper overflow-hidden flex gap-[20px]  pt-[10px]'>
+            <div className='overflow-y-scroll h-screen  w-[50%] px-[15px] pb-[150px] border-[1px] rounded-[15px] bg-[white]'>
                 <strong className='my-[15px] text-[20px] block'>
                     Part 5
                 </strong>
@@ -41,7 +41,7 @@ function Part5({ data, selectedAnswers, onAnswerSelect, question_type }) {
                 />
             </div>
             <div className='ReadingLine w-full bg-MainColor h-[5px] my-[10px] hidden'></div>
-            <div className='overflow-y-scroll h-screen pb-[150px] pt-[30px] w-[50%]'>
+            <div className='overflow-y-scroll h-screen pb-[150px] pt-[30px] w-[50%] border-[1px] rounded-[15px] bg-[white] p-[15px]'>
                 <div
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(data?.right_text)
@@ -68,9 +68,9 @@ function Part5({ data, selectedAnswers, onAnswerSelect, question_type }) {
                 </p>
 
                 {filteredQuestions.map((i, index) => (
-                    <div key={index}>
+                    <div key={index} className='mt-[10px]'>
                         <div className="flex items-center mb-[10px]">
-                            <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
+                            <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
                                 {24 + index}
                             </div>
                             <p className="font-bold">{i?.question}</p>

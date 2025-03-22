@@ -9,18 +9,17 @@ export default function Part4({ data, onAnswerSelect, selectedAnswers }) {
                 </p>
             </div>
             <div className="block">
-                <img className="w-[400px] h-[400px] object-cover" src={CONFIG.API_URL + data?.photo_path} alt="foto" />
+                <img className="max-w-[800px] mx-auto object-cover" src={CONFIG.API_URL + data?.photo_path} alt="foto" />
             </div>
             <div className="space-y-4 max-w-[700px]">
                 {data?.questions?.map((question, index) => (
                     <div key={question.id} className="flex items-center space-x-4">
-                        <span className="bg-MainColor text-[white] p-[5px] rounded-[5px]">
+                        <span className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
                             {18 + index}
                         </span>
-                        <span className="text-md font-medium">Center...</span>
+                        <span className="text-md font-medium">{question?.question}</span>
                         <select
-                            value={selectedAnswers[question.id] || ""} // Запоминает выбранный ответ
-
+                            value={selectedAnswers[question.id] || ""}
                             className="border w-[200px] border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onChange={(e) => onAnswerSelect(question.id, e.target.value, null, "select")}
                         >

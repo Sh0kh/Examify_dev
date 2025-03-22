@@ -9,7 +9,7 @@ const MonualModal = ({ isOpen, onClose }) => {
       videoRef.current.play(); // Автозапуск видео
     } else if (videoRef.current) {
       videoRef.current.pause(); // Остановка видео при закрытии
-      videoRef.current.currentTime = 0; 
+      videoRef.current.currentTime = 0;
     }
   }, [isOpen]);
 

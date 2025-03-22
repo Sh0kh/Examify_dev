@@ -48,7 +48,7 @@ function Exam() {
   }, [navigate, location.pathname]);
 
   return (
-    <div className='Book_1'>
+    <div className='Book_1 bg-[#FAFAFA]'>
       {currentComponent === 'LISTENING' && <Listening  />}
       {currentComponent === 'READING' && <Reading />}
       {currentComponent === 'SPEAKING' && <Speaking />}

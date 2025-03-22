@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import DOMPurify from 'dompurify';
 import { axiosAPI2 } from '../../../../Service/axios';
+import { useParams } from 'react-router-dom';
 
 
 function Speaking1({ data, onResponse }) {
-
+    const { ID } = useParams()
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
     const [timeLeft, setTimeLeft] = useState(120);
@@ -125,8 +126,8 @@ function Speaking1({ data, onResponse }) {
             setLoading(true);
             const formData = new FormData();
             formData.append('audio', audioBlob, 'recording.ogg');
-            formData.append('questionId', data.id); // Предполагаем, что data содержит id вопроса
-
+            formData.append('question_id', data.id); // Предполагаем, что data содержит id вопроса
+            formData.append('exam_id', ID);
             const response = await axiosAPI2.post('/user/upload-speaking', formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -137,9 +138,12 @@ function Speaking1({ data, onResponse }) {
             setSuc(true);
             if (onResponse) {
                 onResponse({
+                    exam_id: ID,
                     file_path: response.data?.audio_path,
                     question_id: data.questions[0]?.id,
-                    question_type: 'speaking'
+                    answer_id: response?.data?.id,
+                    question_type: 'speaking',
+                    answer_text: response?.data?.transcription || ""
                 });
             }
         } catch (error) {

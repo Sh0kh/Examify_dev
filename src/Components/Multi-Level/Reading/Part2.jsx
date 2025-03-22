@@ -10,13 +10,13 @@ function Part2({ data, selectedAnswers, onAnswerSelect }) {
     };
 
     return (
-        <div className='Readin__wrapper overflow-hidden flex gap-[20px] border-t-[2px] pt-[10px]'>
-            <div className='overflow-y-scroll h-screen w-[50%] px-[15px] pb-[150px]'>
+        <div className='Readin__wrapper overflow-hidden flex gap-[20px]  pt-[10px]'>
+            <div className='overflow-y-scroll h-screen w-[50%] px-[15px] pb-[150px] border-[1px] bg-[white] rounded-[15px]'>
                 <strong className='my-[15px] text-[20px] block'>Part 2</strong>
                 <img className="w-[400px]" src={CONFIG.API_URL + data?.photo_path} alt="foto" />
             </div>
             <div className='ReadingLine w-full bg-MainColor h-[5px] my-[10px] hidden'></div>
-            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%]'>
+            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%] border-[1px] bg-[white] p-[15px] rounded-[15px]'>
                 <div className="p-4 space-y-8 pb-[100px] max-w-3xl mx-auto">
                     <div>
                         <p className="text-lg font-semibold"

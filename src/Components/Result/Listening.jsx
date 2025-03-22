@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import { axiosAPI1 } from '../../Service/axios';
 
 export default function Listening() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export default function Listening() {
 
   const getListeningResult = useCallback(async () => {
     try {
-      const response = await axios.get(`/ielts/exam/result/get-results-inline/LISTENING/${ID}`, {
+      const response = await axiosAPI1.get(`/ielts/exam/result/get-results-inline/LISTENING/${ID}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -41,7 +41,7 @@ export default function Listening() {
   }
 
   return (
-    <div className='Listening pt-[130px] bg-white min-h-screen'>
+    <div className='Listening pt-[130px] pb-[50px] bg-white min-h-screen'>
       <div className='Container mx-auto px-4'>
         <h1 className='font-bold text-[40px]  text-black mb-4'>
           Your Listening Result

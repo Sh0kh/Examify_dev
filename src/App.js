@@ -24,6 +24,7 @@ import Bonus from './Pages/Bonus';
 import Book2 from './Components/Books/Book2/Book2';
 import MultiLevel from './Pages/MultiLevel';
 import Exam from './Components/Multi-Level/Exam';
+import Payment from './Pages/Payment';
 
 function App() {
   // useEffect(() => {
@@ -58,6 +59,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path='/multi-level' element={<MultiLevel />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/payment' element={<Payment />} />
+
               <Route path='/test' element={<Test />} />
               <Route path='/faq' element={<FAQ />} />
               <Route path='/rating' element={<Rating />} />
@@ -73,7 +76,6 @@ function App() {
             <Route path='/multi-level/exam/:ID' element={<Exam />} />
           </Route>
           <Route path='/book2/:ID' element={<PrivateRoute element={<Book2 />} />} />
-
         </Routes>
       </Router>
 

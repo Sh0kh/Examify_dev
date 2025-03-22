@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import { axiosAPI2 } from '../../../Service/axios';
+import { useParams } from 'react-router-dom';
 
 function SpeakingCard({ data, index, onResponse, time }) {
+    const { ID } = useParams()
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
     const [timeLeft, setTimeLeft] = useState(time);
@@ -123,7 +125,8 @@ function SpeakingCard({ data, index, onResponse, time }) {
             setLoading(true);
             const formData = new FormData();
             formData.append('audio', audioBlob, 'recording.ogg');
-            formData.append('questionId', data.id); // Предполагаем, что data содержит id вопроса
+            formData.append('exam_id', ID);
+            formData.append('question_id', data.id); // Предполагаем, что data содержит id вопроса
 
             const response = await axiosAPI2.post('/user/upload-speaking', formData, {
                 headers: {
@@ -135,9 +138,11 @@ function SpeakingCard({ data, index, onResponse, time }) {
             setSuc(true);
             if (onResponse) {
                 onResponse({
+                    answer_id: response?.data?.id,
                     file_path: response.data?.audio_path,
                     question_id: data.id,
                     question_type: 'speaking',
+                    // exam_id:'',
                     answer_text: response?.data?.transcription || ""
                 });
             }
@@ -167,9 +172,9 @@ function SpeakingCard({ data, index, onResponse, time }) {
 
     return (
         <div>
-            <div className='border-[2px] p-[20px] mt-[20px]'>
-                <h2 className='font-bold text-[30px]'>Question {index + 1}</h2>
-                <p className='font-bold text-[20px] mb-[15px]'>
+            <div className='border-t-[2px] p-[20px] mt-[20px]'>
+                <h2 className='font-bold text-[25px]'>Question {index + 1}</h2>
+                <p className=' text-[16px] mb-[15px]'>
                     {data?.question}
                 </p>
                 {loading ? (
@@ -177,11 +182,11 @@ function SpeakingCard({ data, index, onResponse, time }) {
                         <ReactLoading type="spinningBubbles" color="#000" height={50} width={50} />
                     </div>
                 ) : (
-                    <div className='w-[150px] mx-auto'>
+                    <div className='w-[150px] '>
                         {!suc && (
                             <button
                                 onClick={isRecording ? stopRecording : startRecording}
-                                className={`bg-blue-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 ${isRecording ? 'bg-red-600' : 'bg-green-600'}`}>
+                                className={`bg-blue-500 px-[30px] text-[16px] w-[250px] font-bold py-[5px] rounded-[8px] text-[white] transition duration-500 ${isRecording ? 'bg-red-600' : 'bg-[#2970FF]'}`}>
                                 {isRecording ? 'Stop Recording' : 'Start Recording'}
                             </button>
                         )}
@@ -203,7 +208,7 @@ function SpeakingCard({ data, index, onResponse, time }) {
                     </div>
                 )}
                 {suc !== null && !loading && (
-                    <div className='mx-auto w-[500px] text-center'>
+                    <div className=''>
                         {suc ? (
                             <h1>Audio submitted successfully!</h1>
                         ) : (

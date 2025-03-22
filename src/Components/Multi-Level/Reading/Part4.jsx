@@ -5,8 +5,8 @@ import DOMPurify from 'dompurify';
 function Part4({ data, selectedAnswers, onAnswerSelect }) {
 
     return (
-        <div className='Readin__wrapper overflow-hidden flex gap-[20px] border-t-[2px] pt-[10px]'>
-            <div className='overflow-y-scroll h-screen  w-[50%] px-[15px] pb-[150px]'>
+        <div className='Readin__wrapper overflow-hidden flex gap-[20px] pt-[10px]'>
+            <div className='overflow-y-scroll h-screen  w-[50%] px-[15px] pb-[150px] border-[1px] rounded-[15px] bg-[white]'>
                 <strong className='my-[15px] text-[20px] block'>
                     Part 4
                 </strong>
@@ -19,11 +19,11 @@ function Part4({ data, selectedAnswers, onAnswerSelect }) {
             <div className='ReadingLine w-full bg-MainColor h-[5px] my-[10px] hidden'>
 
             </div>
-            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%]'>
+            <div className='overflow-y-scroll h-screen pb-[150px] w-[50%] bg-[white] border-[1px] rounded-[15px] p-[15px]'>
                 {data?.questions?.map((i, index) => (
                     < div key={index}>
                         <div className="flex items-center mb-[10px]">
-                            <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
+                            <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
                                 {24 + index}
                             </div>
                             <p className="font-bold ">{i?.question}</p>

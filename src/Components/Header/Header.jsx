@@ -17,7 +17,6 @@ function Header() {
   const [modal, setModal] = useState(false);
   const [manualModal, setManualModal] = useState(false);
 
-
   const ActiveModal = () => {
     setModal(!modal);
   };
@@ -120,6 +119,9 @@ function Header() {
                     <h3>{data?.phoneNumber}</h3>
                     <h3 className='font-bold'>
                       Exam limit: {data?.todayExamCount}
+                    </h3>
+                    <h3 className="font-bold">
+                      Balance: {data?.balance?.toLocaleString("ru-RU")}
                     </h3>
                   </div>
                   <div className='w-full h-[1px] my-[7px] bg-MainColor'></div>

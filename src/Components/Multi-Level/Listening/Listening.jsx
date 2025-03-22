@@ -11,6 +11,7 @@ import MultiLevelStartModal from '../MultiLevelStartModal.jsx'
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../Redux/ComponentSlice';
 import { setNextSection } from '../../../Redux/NextSection.js';
+import AudioPlayer from './AudioPlay.jsx';
 
 
 function Listening() {
@@ -40,6 +41,8 @@ function Listening() {
             setTimeLeft(examData.section.duration * 60);
         }
     }, [examData]);
+
+
 
     useEffect(() => {
         if (timeLeft !== null) {
@@ -73,34 +76,40 @@ function Listening() {
     const handleAnswerSelect = (question_id, answer_id, value = null, partType) => {
         setSelectedAnswers(prev => ({ ...prev, [question_id]: answer_id || value }));
 
+        const answerObj = {
+            question_id,
+            answer_id,
+            question_type: partType.includes("quiz") ? "quiz" : "select",
+            answer_text: ""
+        };
+
         if (partType === "quiz") {
             setPart1Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
+                return [...updatedAnswers, answerObj];
             });
         } else if (partType === "writing") {
-            setPart2Answer(value);
+            setPart2Answer(value || "");
         } else if (partType === "select") {
             setPart3Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
+                return [...updatedAnswers, answerObj];
             });
         } else if (partType === "map") {
             setPart4Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "select" }];
+                return [...updatedAnswers, answerObj];
             });
-        }
-        else if (partType === "quiz2") {
+        } else if (partType === "quiz2") {
             setPart5Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                return [...updatedAnswers, { question_id, answer_id, question_type: "quiz" }];
+                return [...updatedAnswers, answerObj];
             });
-        }
-        else if (partType === "writing2") {
-            setPart6Answer(value);
+        } else if (partType === "writing2") {
+            setPart6Answer(value || "");
         }
     };
+
 
 
     const checkPart = async () => {
@@ -198,49 +207,53 @@ function Listening() {
             id: 6, component: <Part6
                 data={examData?.section?.parts[5]}
                 onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "writing2")}
-
             />
         },
     ];
 
     return (
-        <div className='Listening'>
-            <div className='Book__header p-[10px] bg-[#b4b0b08c]'>
-                <div className='flex items-center justify-between'>
-                    <h2 className='text-[red]'>Listening exam</h2>
-                    <h2>{formatTime(timeLeft)}</h2>
-                    <div className='flex items-center gap-[10px]'>
-                        <button onClick={out} className='bg-[red] px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 border-[2px] border-[red] hover:bg-transparent hover:text-[red]'>
-                            Leave exam
-                        </button>
-                        <button
-                            onClick={checkPart}
-                            disabled={loading}
-                            className={`bg-green-500 px-[20px] font-bold py-[7px] rounded-[8px] text-white transition duration-500 border-[2px] border-green-500 
-        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-green-500"}
+        <div className='Listening min-h-screen'>
+            <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
+                <div className='Container'>
+                    <div className='flex items-center justify-between'>
+                        <h2 className='text-[black] text-[28px] font-bold'>Listening exam</h2>
+                        <h2>{formatTime(timeLeft)}</h2>
+                        <div className='flex items-center gap-[10px]'>
+                            <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
+                                Leave exam
+                            </button>
+                            <button
+                                onClick={checkPart}
+                                disabled={loading}
+                                className={`bg-[#2970FF] px-[50px] font-bold py-[7px] shadow-sm rounded-[8px] text-white transition duration-500 border-[2px] border-[#2970FF]
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-[#2970FF]"}
     `}
-                        >
-                            {loading ? "Loading..." : "Next Exam"}
-                        </button>
+                            >
+                                {loading ? "Loading..." : "Next Exam"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div className='Container'>
-                <div className='flex items-center gap-[3px] mt-[30px]'>
+                <div className='flex items-center  mt-[30px]'>
                     {parts.map(part => (
                         <button
                             key={part.id}
                             onClick={() => setActive(part.id)}
-                            className={`border-[1px] border-[#D6D4D4] px-[10px] py-[7px] font-bold bg-[#ababab83] ${active === part.id ? 'bg-transparent' : ''}`}
+                            className={`border-[1px] border-[#F5F5F5] px-[24px] py-[12px] font-bold  ${active === part.id ? 'bg-[#2970FF] text-[white]' : 'bg-[white]'}`}
                         >
-                            <span className='Part__words'>Part</span>
+                            <span className='Part__words'>Part</span>{' '}
                             {part.id}
                         </button>
                     ))}
                 </div>
-                <div>{parts.find(part => part.id === active)?.component}</div>
+                <div
+                    className='bg-[white] p-[10px] mt-[12px] rounded-[15px] border-[1px] border-[#E9EAEB]'
+                >{parts.find(part => part.id === active)?.component}</div>
             </div>
             <MultiLevelStartModal isOpen={StartModal} onClose={() => setStartModal(false)} setDataFromChild={handleDataFromChild} />
+            {examData?.section?.audio_path && <AudioPlayer audioPath={examData.section.audio_path} />}
         </div>
     );
 }

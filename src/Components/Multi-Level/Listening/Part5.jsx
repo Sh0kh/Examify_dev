@@ -9,7 +9,7 @@ export default function Part5({ data, onAnswerSelect, selectedAnswers }) {
             {data?.questions?.map((i, index) => (
                 < div key={index}>
                     <div className="flex items-center mb-[10px]">
-                        <div className="w-8 h-8 flex items-center justify-center bg-MainColor text-white font-bold rounded-full mr-4">
+                        <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
                             {24 + index}
                         </div>
                         <p className="font-bold ">{i?.question}</p>
