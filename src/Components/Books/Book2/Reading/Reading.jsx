@@ -71,7 +71,7 @@ function Reading() {
 
 
         const showSuccessToast = () => {
-            toast.success('Muvaffaqiyatli!', {
+            toast.success('Successful!', {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,

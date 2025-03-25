@@ -11,9 +11,9 @@ export const fetchData = createAsyncThunk('data/fetchData', async (_, { rejectWi
         });
         return response.data;
     } catch (error) {
-        // if (error.response && error.response.status === 401) {
-        //     localStorage.removeItem('token');
-        // }           
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+        }           
     }
 });
 

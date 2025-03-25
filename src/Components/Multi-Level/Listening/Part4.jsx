@@ -15,7 +15,7 @@ export default function Part4({ data, onAnswerSelect, selectedAnswers }) {
                 {data?.questions?.map((question, index) => (
                     <div key={question.id} className="flex items-center space-x-4">
                         <span className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
-                            {18 + index}
+                            {20 + index}
                         </span>
                         <span className="text-md font-medium">{question?.question}</span>
                         <select

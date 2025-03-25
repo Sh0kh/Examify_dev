@@ -137,10 +137,10 @@ function Writing() {
         <div className='Reading  min-h-screen'>
             <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
                 <div className='Container'>
-                    <div className='flex items-center justify-between'>
-                        <h2 className='text-[black] text-[28px] font-bold'>Writing exam</h2>
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                <h2 className='text-[black] text-[28px] font-bold'>Writing exam</h2>
                         <h2>{formatTime(timeLeft)}</h2>
-                        <div className='flex items-center gap-[10px]'>
+                        <div className="flex items-center gap-3 flex-wrap">
                             <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
                                 Leave exam
                             </button>
@@ -158,7 +158,7 @@ function Writing() {
                 </div>
             </div>
             <div className='p-[10px]'>
-                <div className='flex items-center mt-[30px]'>
+            <div className="flex items-center mt-6 flex-wrap gap-2">
                     {parts.map(part => (
                         <button
                             key={part.id}

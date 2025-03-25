@@ -121,7 +121,7 @@ function Speaking() {
                     "Content-Type": "application/json"
                 }
             });
-            navigate('/myResult')
+            finishExam()
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
         } finally {
@@ -129,14 +129,31 @@ function Speaking() {
         }
     };
 
+    const finishExam = async () => {
+        try {
+            const examInfo = {
+                exam_id: ID
+            }
+            await axiosAPI2.post(`/user/finish-exam`, examInfo, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json"
+                }
+            })
+            navigate('/myResult')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className="Speaking min-h-screen">
             <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
                 <div className='Container'>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
                         <h2 className="text-[black] text-[28px] font-bold">Speaking exam</h2>
                         <h2>{formatTime(timeLeft)}</h2>
-                        <div className="flex items-center gap-[10px]">
+                        <div className="flex items-center gap-3 flex-wrap">
                             <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
                                 Leave exam
                             </button>
@@ -147,14 +164,14 @@ function Speaking() {
         ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-[#2970FF]"}
     `}
                             >
-                                {loading ? "Loading..." : "Next Exam"}
+                                {loading ? "Loading..." : "Finish exam"}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="Container">
-                <div className="flex items-center  mt-[30px]">
+                <div className="flex items-center mt-6 flex-wrap gap-2">
                     {parts.map(part => (
                         <button
                             key={part.id}

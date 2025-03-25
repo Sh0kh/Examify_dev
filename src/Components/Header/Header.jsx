@@ -17,6 +17,8 @@ function Header() {
   const [modal, setModal] = useState(false);
   const [manualModal, setManualModal] = useState(false);
 
+  
+
   const ActiveModal = () => {
     setModal(!modal);
   };

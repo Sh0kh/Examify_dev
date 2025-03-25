@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
-import { axiosAPI1 } from '../../Service/axios';
+import { axiosAPI2 } from '../../Service/axios';
 
-export default function Reading() {
+export default function CefrListening() {
     const navigate = useNavigate();
-    const { ID } = useParams();
+    const { ExamID, SectionID } = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const getReadingResult = useCallback(async () => {
+    const getListeningResult = useCallback(async () => {
         try {
-            const response = await axiosAPI1.get(`/ielts/exam/result/get-results-inline/READING/${ID}`, {
+            const response = await axiosAPI2.get(`/user/my-exam/${ExamID}/${SectionID}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-            setData(response.data.answers); // Access the 'answers' array directly
+            setData(response.data.answers);
         } catch (error) {
             console.log(error);
             if (401 === error.response?.status) {
@@ -26,11 +26,11 @@ export default function Reading() {
         } finally {
             setLoading(false);
         }
-    }, [ID, navigate]);
+    }, [ExamID, navigate]);
 
     useEffect(() => {
-        getReadingResult();
-    }, [getReadingResult]);
+        getListeningResult();
+    }, [getListeningResult]);
 
     if (loading) {
         return (
@@ -41,10 +41,10 @@ export default function Reading() {
     }
 
     return (
-        <div className='Reading pt-[130px] bg-white min-h-screen mb-[50px]'>
+        <div className='Listening pt-[130px] pb-[50px] bg-white min-h-screen'>
             <div className='Container mx-auto px-4'>
                 <h1 className='font-bold text-[40px]  text-black mb-4'>
-                    Your Reading Result
+                    Your Listening Result
                 </h1>
                 <h2 className=' text-[25px] text-black mb-6'>
                     Your Answers
@@ -68,8 +68,8 @@ export default function Reading() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.length > 0 ? (
-                                data.map((item, index) => (
+                            {data?.length > 0 ? (
+                                data?.map((item, index) => (
                                     <tr key={index} className='hover:bg-gray-50'>
                                         <td className='py-3 px-4 border-b border-gray-300 text-center'>
                                             <h3 className='text-[16px] text-gray-700'>{index + 1}</h3>

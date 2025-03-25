@@ -24,7 +24,7 @@ function Part4({ data, selectedAnswers, onAnswerSelect }) {
                     < div key={index}>
                         <div className="flex items-center mb-[10px]">
                             <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
-                                {24 + index}
+                                {20 + index}
                             </div>
                             <p className="font-bold ">{i?.question}</p>
                         </div>

@@ -24,7 +24,7 @@ export default function MultiLevelBuyModal({ isOpen, onClose, id, Error }) {
 
             navigate(`/multi-level/exam/${response?.data?.exam?.id}`)
             Swal.fire({
-                title: 'Muvaffaqiyatli!',
+                title: 'Successful!',
                 icon: 'success',
                 position: 'top-end',
                 timer: 3000,

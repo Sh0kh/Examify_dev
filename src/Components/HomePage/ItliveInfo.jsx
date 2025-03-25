@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from '../../images/logo-dark.svg'
+import Ovner from '../../images/Avatar.svg'
 export default function ItliveInfo() {
   return (
     <section className=" mx-auto text-center py-16 px-6">
@@ -7,7 +8,7 @@ export default function ItliveInfo() {
         {/* Logo */}
         <div className=" flex justify-center">
           <img
-            src={Logo} 
+            src={Logo}
             alt="Itlive Logo"
             className="w-24 h-24"
           />
@@ -21,7 +22,7 @@ export default function ItliveInfo() {
         {/* CEO Info */}
         <div className="mt-6 flex flex-col items-center">
           <img
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Agar rasm yo‘q bo‘lsa, avval vaqtincha placeholder ishlatiladi
+            src={Ovner}
             alt="CEO"
             className="w-20 h-20 rounded-full border border-gray-300 shadow-sm"
           />

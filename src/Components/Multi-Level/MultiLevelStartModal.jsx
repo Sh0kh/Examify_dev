@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 import { axiosAPI2 } from "../../Service/axios";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 export default function MultiLevelStartModal({ isOpen, onClose, setDataFromChild }) {
     const { ID } = useParams();
+    const [loading, setLoading] = useState(false)
 
 
     const StartExam = async () => {
+        setLoading(true)
         try {
             const formData = new FormData();
             formData.append("exam_id", ID);
@@ -21,7 +24,7 @@ export default function MultiLevelStartModal({ isOpen, onClose, setDataFromChild
             setDataFromChild(response?.data);
 
             Swal.fire({
-                title: "Muvaffaqiyatli!",
+                title: "Successful!",
                 icon: "success",
                 position: "top-end",
                 timer: 3000,
@@ -44,11 +47,10 @@ export default function MultiLevelStartModal({ isOpen, onClose, setDataFromChild
                 toast: true,
                 showConfirmButton: false,
             });
+        } finally {
+            setLoading(false)
         }
     };
-
-    // console.log(data)
-
     return (
         <div
             className={`fixed inset-0 bg-[#0000006b] z-50 flex items-center justify-center transition-opacity duration-500 ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -65,9 +67,11 @@ export default function MultiLevelStartModal({ isOpen, onClose, setDataFromChild
                 </p>
                 <div className="flex items-center justify-center gap-[30px] mt-[10px]">
                     <button
+                        disabled={loading}
                         onClick={StartExam}
-                        className="mt-4 bg-blue-600 w-full text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-                        Start
+                        className={`bg-[#2970FF] px-[50px] w-full font-bold py-[7px] shadow-sm rounded-[8px] text-white transition duration-500 border-[2px] border-[#2970FF]
+        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-[#2970FF]"} `}    >
+                        {loading ? "Loading..." : "Start"}
                     </button>
                 </div>
             </div>

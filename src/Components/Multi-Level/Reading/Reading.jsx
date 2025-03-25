@@ -68,8 +68,14 @@ function Reading() {
             answer_text: value || ""
         };
 
-        if (partType === "part1") {
-            setPart1Answer(value || "");
+        if (partType === "part1" || partType === "part5") {
+            if (Array.isArray(value)) {
+                setPart1Answer(value);
+                if (partType === "part5") setPart5Answer(value);
+            } else {
+                setPart1Answer(prev => Array.isArray(prev) ? prev : []);
+                setPart5Answer(prev => Array.isArray(prev) ? prev : []);
+            }
         } else if (partType === "part2") {
             setPart2Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
@@ -85,18 +91,9 @@ function Reading() {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, { ...answerObj, question_type: "quiz" }];
             });
-        } else if (partType === "part5") {
-            setPart5Answer(prev => {
-                const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
-                if (question_type === "quiz") {
-                    return [...updatedAnswers, { ...answerObj, question_type: "quiz" }];
-                } else if (question_type === "writing") {
-                    return [...updatedAnswers, { question_id, answer_text: value || "", question_type: "writing", answer_id: null }];
-                }
-                return updatedAnswers;
-            });
         }
     };
+
 
 
 
@@ -163,6 +160,7 @@ function Reading() {
             component: <Part1
                 onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "part1")}
                 data={NextSection?.next_section?.parts[0]}
+                selectedAnswers={Part1Answer}
             />
         },
         {
@@ -192,6 +190,7 @@ function Reading() {
         {
             id: 5,
             component: <Part5
+                writingAnswer={Part5Answer}
                 selectedAnswers={selectedAnswers}
                 onAnswerSelect={(q, a, v, type) => handleAnswerSelect(q, a, v, "part5", type)}
                 data={NextSection?.next_section?.parts[4]}
@@ -210,10 +209,10 @@ function Reading() {
         <div className='Reading   min-h-screen'>
             <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
                 <div className='Container'>
-                    <div className='flex items-center justify-between'>
+                    <div className="flex items-center justify-between flex-wrap gap-4">
                         <h2 className='text-[black] text-[28px] font-bold'>Reading exam</h2>
                         <h2>{formatTime(timeLeft)}</h2>
-                        <div className='flex items-center gap-[10px]'>
+                        <div className="flex items-center gap-3 flex-wrap">
                             <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
                                 Leave exam
                             </button>
@@ -231,8 +230,8 @@ function Reading() {
                 </div>
             </div>
             <div className='p-[10px]'>
-                <div className='flex items-center  mt-[30px]'>
-                    {parts.map(part => (
+            <div className="flex items-center mt-6 flex-wrap gap-2">
+            {parts.map(part => (
                         <button
                             key={part.id}
                             onClick={() => setActive(part.id)}

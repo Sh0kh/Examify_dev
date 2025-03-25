@@ -1,109 +1,83 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import DOMPurify from "dompurify";
 
 export default function Part2({ data, onAnswerSelect, selectedAnswers }) {
-    // Обработчик изменения значения input
-    const handleInputChange = (questionId, answerId, value) => {
-        // Фильтруем старые ответы и добавляем новый
-        const newAnswers = [
-            ...selectedAnswers.filter(
-                (a) => !(a.question_id === questionId && a.answer_id === answerId)
-            ),
-            {
-                question_id: questionId,
-                answer_id: answerId,
-                answer_text: value,
-                question_type: "writing",
-            },
-        ].filter((a) => a.answer_text !== ""); // Удаляем пустые ответы
+    const containerRef = useRef(null);
 
-        // Передаем новые ответы на уровень выше
-        onAnswerSelect(null, null, newAnswers);
-    };
+    // Генерируем уникальные инпуты для каждого вопроса
+    const processedHtml = data?.questions
+        ?.map((question) => {
+            let inputCounter = 0;
+            return question.question.replace(/\{inputext\}/g, () => {
+                inputCounter++;
+                return `<input type="text"
+                    class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part6-input"
+                    data-question-id="${question.id}"
+                    data-input-index="${inputCounter}" 
+                />`;
+            });
+        })
+        .join("");
 
-    // Функция для рендера HTML контента с вставкой input полей
-    const renderQuestionContent = (question) => {
-        // Если вопрос не задан, вернем пустой фрагмент
-        if (!question || !question.question) {
-            return <React.Fragment />;
-        }
+    // Инициализируем инпуты сохраненными значениями
+    useEffect(() => {
+        if (!containerRef.current || !selectedAnswers || !Array.isArray(selectedAnswers)) return;
 
-        // Создаем регулярное выражение для поиска {inputext}
-        const inputRegex = /\{inputext\}/g;
+        const inputs = containerRef.current.querySelectorAll(".part6-input");
 
-        // Проверяем наличие {inputext} в вопросе
-        if (!inputRegex.test(question.question)) {
-            // Если нет меток ввода, просто возвращаем HTML как есть
-            return <div dangerouslySetInnerHTML={{ __html: question.question }} />;
-        }
-
-        // Разбиваем HTML на части до и после {inputext}
-        const parts = question.question.split(inputRegex);
-
-        // Создаем массив для результата
-        const result = [];
-
-        // Обходим каждую часть
-        for (let i = 0; i < parts.length; i++) {
-            // Добавляем текущую часть HTML
-            if (parts[i]) {
-                result.push(
-                    <span key={`part-${i}`} dangerouslySetInnerHTML={{ __html: parts[i] }} />
-                );
-            }
-
-            // Добавляем input поле после всех частей, кроме последней
-            if (i < parts.length - 1) {
-                const answerId = `${question.id}-input-${i}`;
-
-                // Находим ответ для этого поля ввода
-                const answer = selectedAnswers.find(
-                    (a) => a.question_id === question.id && a.answer_id === answerId
-                ) || { answer_text: "" };
-
-                // Добавляем поле ввода
-                result.push(
-                    <input
-                        key={answerId}
-                        type="text"
-                        className="border-b-[black] border-b-[2px] inline outline-none px-2 py-1 rounded part2-input"
-                        value={answer.answer_text}
-                        onChange={(e) => handleInputChange(question.id, answerId, e.target.value)}
-                    />
-                );
-            }
-        }
-
-        return result;
-    };
-
-    // Обработчик для безопасного рендеринга компонента
-    const safeRender = (question) => {
-        try {
-            return renderQuestionContent(question);
-        } catch (error) {
-            console.error("Ошибка рендеринга вопроса:", error);
-            return (
-                <div className="p-2 bg-red-100 border border-red-400 rounded">
-                    <p>Произошла ошибка при рендеринге вопроса.</p>
-                    <p>Текст ошибки: {error.message}</p>
-                </div>
+        inputs.forEach(input => {
+            const questionId = input.dataset.questionId;
+            const inputIndex = input.dataset.inputIndex;
+            const savedAnswer = selectedAnswers.find(
+                answer => answer.question_id === questionId &&
+                answer.input_index === inputIndex
             );
-        }
-    };
+
+            if (savedAnswer) {
+                input.value = savedAnswer.answer_text || "";
+            }
+        });
+    }, [selectedAnswers]); // Убрали containerRef.current из зависимостей
+
+    // Обновляем ответы при изменении инпутов
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const inputs = containerRef.current.querySelectorAll(".part6-input");
+
+        const updateAnswers = () => {
+            const updatedAnswers = Array.from(inputs).map(input => ({
+                question_id: input.dataset.questionId,
+                input_index: input.dataset.inputIndex,
+                answer_id: null,
+                question_type: "writing",
+                answer_text: input.value
+            }));
+
+            onAnswerSelect(null, null, updatedAnswers);
+        };
+
+        inputs.forEach(input => input.addEventListener("input", updateAnswers));
+
+        return () => {
+            inputs.forEach(input => input.removeEventListener("input", updateAnswers));
+        };
+    }, [onAnswerSelect]); // Убрали containerRef.current из зависимостей
 
     return (
         <div className="p-4 mx-auto space-y-8 pb-[100px]">
-            {/* Описание теста */}
             <div>
                 <p className="text-lg font-semibold">{data?.description}</p>
             </div>
-
-            {/* Вопросы */}
-            {data?.questions?.map((question) => (
-                <div key={question.id} className="space-y-6">
-                    {safeRender(question)}
-                </div>
-            ))}
+            {processedHtml && (
+                <div
+                    ref={containerRef}
+                    className="space-y-6"
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(processedHtml)
+                    }}
+                />
+            )}
         </div>
     );
 }

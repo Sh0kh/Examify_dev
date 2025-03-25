@@ -88,9 +88,15 @@ function Listening() {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, answerObj];
             });
-        } else if (partType === "writing") {
-            setPart2Answer(value || "");
-        } else if (partType === "select") {
+        }
+        else if (partType === "writing") {
+            if (Array.isArray(value)) {
+                setPart2Answer(value);
+            } else {
+                setPart2Answer(prev => Array.isArray(prev) ? prev : []);
+            }
+        }
+        else if (partType === "select") {
             setPart3Answer(prev => {
                 const updatedAnswers = prev.filter(ans => ans.question_id !== question_id);
                 return [...updatedAnswers, answerObj];
@@ -106,7 +112,12 @@ function Listening() {
                 return [...updatedAnswers, answerObj];
             });
         } else if (partType === "writing2") {
-            setPart6Answer(value || "");
+            // Handle array of answers from Part6
+            if (Array.isArray(value)) {
+                setPart6Answer(value);
+            } else {
+                setPart6Answer(prev => Array.isArray(prev) ? prev : []);
+            }
         }
     };
 
@@ -161,6 +172,10 @@ function Listening() {
             dispatch(setComponent('READING'));
         } catch (error) {
             console.error("Ошибка при отправке ответов", error);
+            if(error?.status === 401){
+                localStorage.clear()
+                navigate('/login')
+            }
         } finally {
             setLoading(false)
         }
@@ -194,7 +209,6 @@ function Listening() {
                 onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "map")}
                 selectedAnswers={selectedAnswers}
             />
-
         },
         {
             id: 5, component: <Part5
@@ -207,27 +221,43 @@ function Listening() {
             id: 6, component: <Part6
                 data={examData?.section?.parts[5]}
                 onAnswerSelect={(q, a, v) => handleAnswerSelect(q, a, v, "writing2")}
+                selectedAnswers={Part6Answer}
             />
-        },
+        }
     ];
 
     return (
-        <div className='Listening min-h-screen'>
-            <div className='Book__header p-[10px] py-[20px] bg-[white] border-b-[1px] border-[#E9EAEB]'>
-                <div className='Container'>
-                    <div className='flex items-center justify-between'>
-                        <h2 className='text-[black] text-[28px] font-bold'>Listening exam</h2>
-                        <h2>{formatTime(timeLeft)}</h2>
-                        <div className='flex items-center gap-[10px]'>
-                            <button onClick={out} className='bg-[white] text-[16px] shadow-sm px-[50px] font-[600] py-[7px] rounded-[8px] text-[#414651] transition duration-500 border-[1px] border-[#D5D7DA] hover:opacity-[0.5]'>
+        <div className="Listening min-h-screen">
+            {/* Header */}
+            <div className="Book__header p-4 bg-white border-b border-gray-200">
+                <div className="Container">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                        {/* Заголовок */}
+                        <h2 className="text-black text-2xl font-bold">
+                            Listening exam
+                        </h2>
+                        {/* Таймер */}
+                        <h2 className="text-lg font-medium ">
+                            {formatTime(timeLeft)}
+                        </h2>
+
+                        {/* Кнопки */}
+                        <div className="flex items-center gap-3 flex-wrap">
+                            {/* Кнопка "Leave exam" */}
+                            <button
+                                onClick={out}
+                                className="bg-white text-base shadow-sm px-6 py-2 font-semibold rounded-lg text-gray-700 transition duration-500 border border-gray-300 hover:opacity-70 sm:px-8 md:px-10 lg:px-12"
+                            >
                                 Leave exam
                             </button>
+
+                            {/* Кнопка "Next Exam" */}
                             <button
                                 onClick={checkPart}
                                 disabled={loading}
-                                className={`bg-[#2970FF] px-[50px] font-bold py-[7px] shadow-sm rounded-[8px] text-white transition duration-500 border-[2px] border-[#2970FF]
-        ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-[#2970FF]"}
-    `}
+                                className={`bg-blue-600 text-white px-6 py-2 font-bold rounded-lg shadow-sm transition duration-500 border-2 border-blue-600
+                                ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-transparent hover:text-blue-600"} 
+                                sm:px-8 md:px-10 lg:px-12`}
                             >
                                 {loading ? "Loading..." : "Next Exam"}
                             </button>
@@ -235,26 +265,33 @@ function Listening() {
                     </div>
                 </div>
             </div>
-            <div className='Container'>
-                <div className='flex items-center  mt-[30px]'>
-                    {parts.map(part => (
+
+            {/* Контент */}
+            <div className="Container">
+                <div className="flex items-center mt-6 flex-wrap gap-2">
+                    {parts.map((part) => (
                         <button
                             key={part.id}
                             onClick={() => setActive(part.id)}
-                            className={`border-[1px] border-[#F5F5F5] px-[24px] py-[12px] font-bold  ${active === part.id ? 'bg-[#2970FF] text-[white]' : 'bg-[white]'}`}
+                            className={`border border-gray-100 px-6 py-3 font-bold text-sm sm:text-base md:text-lg lg:text-xl
+                            ${active === part.id ? "bg-blue-600 text-white" : "bg-white"}`}
                         >
-                            <span className='Part__words'>Part</span>{' '}
-                            {part.id}
+                            <span className="Part__words">Part</span> {part.id}
                         </button>
                     ))}
                 </div>
-                <div
-                    className='bg-[white] p-[10px] mt-[12px] rounded-[15px] border-[1px] border-[#E9EAEB]'
-                >{parts.find(part => part.id === active)?.component}</div>
+
+                {/* Контент активной части */}
+                <div className="bg-white p-4 mt-4 rounded-lg border border-gray-200">
+                    {parts.find((part) => part.id === active)?.component}
+                </div>
             </div>
+
+            {/* Модалки и аудиоплеер */}
             <MultiLevelStartModal isOpen={StartModal} onClose={() => setStartModal(false)} setDataFromChild={handleDataFromChild} />
             {examData?.section?.audio_path && <AudioPlayer audioPath={examData.section.audio_path} />}
         </div>
+
     );
 }
 

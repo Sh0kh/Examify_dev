@@ -174,11 +174,9 @@ function SpeakingCard({ data, index, onResponse, time }) {
         <div>
             <div className='border-t-[2px] p-[20px] mt-[20px]'>
                 <h2 className='font-bold text-[25px]'>Question {index + 1}</h2>
-                <p className=' text-[16px] mb-[15px]'>
-                    {data?.question}
-                </p>
+                <div className='text-[16px] mb-[15px]' dangerouslySetInnerHTML={{ __html: data?.question }} />
                 {loading ? (
-                    <div className='flex items-center justify-center'>
+                    <div className='flex items-center justify-start'>
                         <ReactLoading type="spinningBubbles" color="#000" height={50} width={50} />
                     </div>
                 ) : (
@@ -196,12 +194,21 @@ function SpeakingCard({ data, index, onResponse, time }) {
                             </div>
                         )}
                         {isRecording && (
-                            <div className='mt-[10px] flex items-center'>
-                                <div className='w-full h-[5px] bg-gray-300 overflow-hidden flex'>
+                            <div className='mt-[10px] flex items-center justify-center'>
+                                {/* Анимированный индикатор уровня звука */}
+                                <div className='relative w-[200px] h-[20px] bg-gray-800 rounded-full overflow-hidden'>
                                     <div
-                                        className='h-full bg-green-500'
-                                        style={{ width: `${volume * 100}%` }}
+                                        className='absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-500'
+                                        style={{
+                                            width: `${Math.min(volume * 100, 100)}%`, // Ограничиваем максимальную ширину до 100%
+                                            transition: 'width 0.1s ease-in-out', // Плавная анимация изменения ширины
+                                        }}
                                     ></div>
+                                    <div className='absolute inset-0 flex items-center justify-center'>
+                                        <p className='text-white text-[12px] font-bold z-10'>
+                                            Volume: {Math.round(volume * 100)}%
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         )}

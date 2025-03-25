@@ -10,7 +10,7 @@ export default function Part5({ data, onAnswerSelect, selectedAnswers }) {
                 < div key={index}>
                     <div className="flex items-center mb-[10px]">
                         <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
-                            {24 + index}
+                            {25 + index}
                         </div>
                         <p className="font-bold ">{i?.question}</p>
                     </div>

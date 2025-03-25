@@ -28,8 +28,9 @@ function Part2({ data, selectedAnswers, onAnswerSelect }) {
                     <div className="space-y-4">
                         {data?.questions?.map((i, index) => (
                             <div key={index} className="flex items-center space-x-4">
-                                <span className="text-md font-medium">{7 + index}</span>
-                                <select
+                                <div className="w-8 h-8 flex items-center justify-center bg-[#2970FF] text-white font-bold rounded-full mr-4">
+                                    {6 + index}
+                                </div>                                <select
                                     onChange={(e) => handleSelectChange(i.id, e)}
                                     value={selectedAnswers[i.id] || ""}
                                     className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">

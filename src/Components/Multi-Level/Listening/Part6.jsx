@@ -1,28 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 
-export default function Part2({ data, onAnswerSelect }) {
-    // Генерируем инпуты для каждого вопроса
+export default function Part6({ data, onAnswerSelect, selectedAnswers }) {
+    const containerRef = useRef(null);
+
+    // Генерируем уникальные инпуты для каждого вопроса
     const processedHtml = data?.questions
         ?.map((question) => {
+            let inputCounter = 0;
             return question.question.replace(/\{inputext\}/g, () => {
+                inputCounter++;
                 return `<input type="text"
-                class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part2-input"
-                data-question-id="${question.id}" 
+                class="border-b-[black] border-b-[2px] outline-none px-2 py-1 rounded part6-input"
+                data-question-id="${question.id}"
+                data-input-index="${inputCounter}" 
             />`;
             });
         })
         .join("");
 
-
-
-
+    // Инициализируем инпуты сохраненными значениями
     useEffect(() => {
-        const inputs = document.querySelectorAll(".part2-input");
+        if (!containerRef.current || !selectedAnswers || !Array.isArray(selectedAnswers)) return;
+        
+        const inputs = containerRef.current.querySelectorAll(".part6-input");
+        
+        inputs.forEach(input => {
+            const questionId = input.dataset.questionId;
+            const inputIndex = input.dataset.inputIndex;
+            const savedAnswer = selectedAnswers.find(
+                answer => answer.question_id === questionId && 
+                answer.input_index === inputIndex
+            );
+            
+            if (savedAnswer) {
+                input.value = savedAnswer.answer_text || "";
+            }
+        });
+    }, [selectedAnswers, containerRef.current]);
+
+    // Обновляем ответы при изменении инпутов
+    useEffect(() => {
+        if (!containerRef.current) return;
+        
+        const inputs = containerRef.current.querySelectorAll(".part6-input");
+        
         const updateAnswers = () => {
             const updatedAnswers = Array.from(inputs).map(input => ({
                 question_id: input.dataset.questionId,
-                answer_id: input.dataset.answerId || null, // Привязываем answer_id
+                input_index: input.dataset.inputIndex,
+                answer_id: null,
                 question_type: "writing",
                 answer_text: input.value
             }));
@@ -37,7 +64,6 @@ export default function Part2({ data, onAnswerSelect }) {
         };
     }, [data, onAnswerSelect]);
 
-
     return (
         <div className="p-4 mx-auto space-y-8 pb-[100px]">
             <div>
@@ -45,6 +71,7 @@ export default function Part2({ data, onAnswerSelect }) {
             </div>
             {processedHtml && (
                 <div
+                    ref={containerRef}
                     className="space-y-6"
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(processedHtml)

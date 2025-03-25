@@ -25,6 +25,7 @@ import Book2 from './Components/Books/Book2/Book2';
 import MultiLevel from './Pages/MultiLevel';
 import Exam from './Components/Multi-Level/Exam';
 import Payment from './Pages/Payment';
+import CefrListening from './Components/Result/CefrListening';
 
 function App() {
   // useEffect(() => {
@@ -71,6 +72,9 @@ function App() {
               <Route path='/reading/:ID' element={<PrivateRoute element={<Reading />} />} />
               <Route path='/writing/:ID' element={<PrivateRoute element={<Writing />} />} />
               <Route path='/speaking/:ID' element={<PrivateRoute element={<Speaking />} />} />
+
+              <Route path='/cefr/listening/:ExamID/:SectionID' element={<CefrListening/>}/>
+
             </Route>
             <Route path='/book1/:ID' element={<PrivateRoute element={<Book1 />} />} />
             <Route path='/multi-level/exam/:ID' element={<Exam />} />

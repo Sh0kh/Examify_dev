@@ -208,7 +208,7 @@ function Speaking1({ data, onResponse }) {
                         {!suc && (
                             <button
                                 onClick={isRecording ? stopRecording : startRecording}
-                                className={`bg-blue-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 ${isRecording ? 'bg-red-600' : 'bg-green-600'}`}>
+                                className={`bg-blue-500 px-[20px] font-bold py-[7px] rounded-[8px] text-[white] transition duration-500 ${isRecording ? 'bg-red-600' : 'bg-[#2970FF]'}`}>
                                 {isRecording ? 'Stop Recording' : 'Start Recording'}
                             </button>
                         )}
@@ -221,7 +221,7 @@ function Speaking1({ data, onResponse }) {
                             <div className='mt-[10px] flex items-center'>
                                 <div className='w-full h-[5px] bg-gray-300 overflow-hidden flex'>
                                     <div
-                                        className='h-full bg-green-500'
+                                        className='h-full bg-[#2970FF]'
                                         style={{ width: `${volume * 100}%` }}
                                     ></div>
                                 </div>
